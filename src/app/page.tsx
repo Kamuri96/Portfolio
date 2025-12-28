@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { SectionTitle } from "@/components/ui/section-title";
 import { works, articles } from "@/lib/data";
@@ -29,9 +29,8 @@ export default function TopPage() {
       <section className="space-y-4">
         <SectionTitle>PROFILE</SectionTitle>
         <div className="flex justify-center">
-          <Avatar className="h-16 w-16 border border-black/10">
-            <AvatarImage src="/avatar.png" alt="avatar" />
-            <AvatarFallback>ME</AvatarFallback>
+          <Avatar className="h-20 w-20 border border-white/10">
+            <AvatarImage src="/img/icon.png" alt="avatar" />
           </Avatar>
           <div className="mx-5">
             <p>
@@ -52,7 +51,7 @@ export default function TopPage() {
         <div className="flex items-center justify-center gap-3">
           <SectionTitle>WORKS</SectionTitle>
         </div>
-        <div className="mx-auto max-w-[520px]">
+        <div className="mx-auto max-w-[730px] flex items-center justify-center">
           <ThumbGrid items={works.slice(0, 3)} hrefPrefix="/works" />
         </div>
         <div className="flex items-center justify-center">
@@ -72,7 +71,7 @@ export default function TopPage() {
         <div className="flex items-center justify-center gap-3">
           <SectionTitle>ARTICLES</SectionTitle>
         </div>
-        <div className="mx-auto max-w-[520px]">
+        <div className="mx-auto max-w-[730px] flex items-center justify-center">
           <ThumbGrid items={articles.slice(0, 3)} hrefPrefix="/articles" />
         </div>
         <div className="flex items-center justify-center">

@@ -16,8 +16,8 @@ export function ThumbGrid({
     <div className={cn("grid grid-cols-3 gap-4", className)}>
       {items.map((it) => (
         <Link key={it.id} href={`${hrefPrefix}/${it.id}`} className="block">
-          <Card className="overflow-hidden rounded-none border-black/10 bg-white shadow-none transition hover:border-black/20">
-            <div className="relative w-full">
+          <Card className="overflow-hidden rounded-none border-black/10 bg-white shadow-none transition hover:border-black/20 p-0 h-50 w-45">
+            <div className="relative h-25 w-full">
               <Image
                 src={it.image}
                 alt={it.title}
@@ -26,7 +26,9 @@ export function ThumbGrid({
                 sizes="(max-width: 768px) 33vw, 200px"
               />
             </div>
-            <p>{it.title}</p>
+            <div className="text-center">
+              <p>{it.title}</p>
+            </div>
           </Card>
         </Link>
       ))}

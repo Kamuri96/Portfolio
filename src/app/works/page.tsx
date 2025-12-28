@@ -25,7 +25,7 @@ export default function WorksPage() {
 
   return (
     <div className="space-y-6">
-      <SectionTitle>WORKS</SectionTitle>
+      <SectionTitle className="mt-8">WORKS</SectionTitle>
 
       <div className="flex flex-wrap justify-center gap-2">
         {filters.map((t) => {
