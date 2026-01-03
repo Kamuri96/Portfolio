@@ -48,7 +48,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.98 0 0);
+  --background: oklch(0.96 0.02 210);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -121,5 +121,49 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-120%);
+  padding: 10px 12px;
+  background: oklch(0.985 0 0);
+  color: oklch(0.145 0 0);
+  border: 1px solid oklch(0.922 0 0);
+  z-index: 50;
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid color-mix(in oklab, oklch(0.205 0 0) 55%, transparent);
+  outline-offset: 3px;
+}
+
+body {
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
   }
 }

@@ -2,11 +2,16 @@ export type WorkItem = {
   id: string;
   title: string;
   image: string;
-  tag: "ALL" | "GAME" | "WEB" | "PRODUCT" | "ILLUST" | "OTHER";
+  tag: "ALL" | "GAME" | "WEB" | "PRODUCT" | "OTHER";
   description?: string;
-  year?: string;
-  tech?: string[];
+  /* 詳細 */
+  client: string;
+  period: string;
+  role: string;
+  overview: string;
+  tech: string[];
   links?: { label: string; href: string }[];
+  gallery?: { src: string; alt?: string }[];
 };
 
 export type ArticleItem = {
@@ -37,29 +42,173 @@ export type SkillItem = {
 export const works: WorkItem[] = [
   {
     id: "w1",
-    title: "全世界VTuber計画!?",
-    image: "/img/AllVPlan_hero.png",
+    title: "いっぱい食べる\nキミが好き！",
+    image: "/img/ippai_taberu.png",
     tag: "GAME",
+    period: "2022.6 ~ 2022.7",
+    client: "個人制作",
+    role: "企画 / 実装 / UIデザイン",
+    overview:
+      "初めての個人制作作品です。\n 時間内にフィールド内のアイテムを拾い、スコアを集める3Dゲームです。\n ゲーム内のUIを全て手描きで制作し、ゲームの世界観を統一しました。",
+    tech: ["Unity", "C#"],
+    links: [
+      { label: "Unityroom", href: "https://unityroom.com/games/ippai_taberu" },
+      { label: "GitHub", href: "https://github.com/Kamuri96/OriginalGame" },
+    ],
+    gallery: [
+      { src: "/img/AllVPlan_hero.png", alt: "Hero" },
+      { src: "/works/2.png", alt: "Screen" },
+    ],
   },
   {
     id: "w2",
-    title: "天使と悪魔のTODOリスト",
-    image: "/img/Angel_Devil_Todo_hero.jpg",
-    tag: "PRODUCT",
-  },
-  { id: "w3", title: "Cocoiko", image: "/img/cocoiko.png", tag: "WEB" },
-  {
-    id: "w4",
-    title: "Colorful Umiushi",
+    title: "Colorful Umiushi!",
     image: "/img/umiushi.png",
     tag: "GAME",
+    period: "2023.2 ~ 2023.3",
+    client: "個人制作",
+    role: "企画 / 実装 / UIデザイン",
+    overview:
+      "混ぜ合わせや補色などの、色の性質を用いたパズルゲームです。\n 背景やプレイヤー、ゲーム内オブジェクトを全て手描きし、世界観を統一しました。\n ステージが進むにつれ、色の数や見える範囲を変化させるなど、\nレベルデザインに注意を払いました。",
+    tech: ["Unity", "C#"],
+    links: [
+      {
+        label: "Unityroom",
+        href: "https://unityroom.com/games/colorful-umiushi",
+      },
+      { label: "GitHub", href: "https://github.com/Kamuri96/LA_Original" },
+    ],
+    gallery: [
+      { src: "/img/umiushi.png", alt: "Hero" },
+      { src: "/works/2.png", alt: "Screen" },
+    ],
   },
-  { id: "w5", title: "バトム", image: "/img/battm.png", tag: "GAME" },
+  {
+    id: "w3",
+    title: "バトム！",
+    image: "/img/battm.png",
+    tag: "GAME",
+    period: "2023.7",
+    client: "個人制作",
+    role: "企画 / アニメーション実装 / デザイン",
+    overview:
+      "技育CAMPハッカソンで制作した作品です。\n 学生が、実験のように手を動かしながらゲーム感覚で化学を勉強できるゲームというコンセプトで制作しました。\n マッチング時やリザルト表示にアニメーションをつけたり、分子のオブジェクトをふわふわ動かしたりなど、常に画面に飽きのこないデザインを心がけました。",
+    tech: ["Unity", "C#"],
+    links: [
+      {
+        label: "Unityroom",
+        href: "https://unityroom.com/games/batomu",
+      },
+    ],
+    gallery: [
+      { src: "/img/battm.png", alt: "Hero" },
+      { src: "/works/2.png", alt: "Screen" },
+    ],
+  },
+  {
+    id: "w4",
+    title: "Cocoiko",
+    image: "/img/cocoiko.png",
+    tag: "WEB",
+    period: "2025",
+    client: "個人制作",
+    role: "企画 / UI / 実装",
+    overview:
+      "作品の概要をここに書きます。\n狙い・工夫・結果などを2〜5段落で。",
+    tech: ["Unity", "C#", "UI/UX"],
+    gallery: [
+      { src: "/img/AllVPlan_hero.png", alt: "Hero" },
+      { src: "/works/2.png", alt: "Screen" },
+    ],
+  },
+  {
+    id: "w5",
+    title: "マドライズ",
+    image: "/img/Madlize.png",
+    tag: "GAME",
+    period: "2025",
+    client: "個人制作",
+    role: "企画 / アプリ実装",
+    overview:
+      "作品の概要をここに書きます。\n狙い・工夫・結果などを2〜5段落で。",
+    tech: ["Unity", "C#", "UI/UX"],
+    links: [
+      {
+        label: "作品紹介ページ",
+        href: "https://makezine.jp/event/makers-mft2025/m0128/",
+      },
+    ],
+    gallery: [
+      { src: "/img/AllVPlan_hero.png", alt: "Hero" },
+      { src: "/works/2.png", alt: "Screen" },
+    ],
+  },
   {
     id: "w6",
-    title: "いっぱい食べるキミが好き！",
-    image: "/img/ippai_taberu.png",
+    title: "天使と悪魔の\nTODOリスト",
+    image: "/img/Angel_Devil_Todo_hero.jpg",
+    tag: "PRODUCT",
+    period: "2025.4 ~ 5",
+    client: "授業課題",
+    role: "企画 / アプリ実装",
+    overview:
+      "作品の概要をここに書きます。\n狙い・工夫・結果などを2〜5段落で。",
+    tech: ["Unity", "C#", "UI/UX"],
+    links: [
+      {
+        label: "作品紹介ページ",
+        href: "https://makezine.jp/event/makers-mft2025/m0128/",
+      },
+    ],
+    gallery: [
+      { src: "/img/AllVPlan_hero.png", alt: "Hero" },
+      { src: "/works/2.png", alt: "Screen" },
+    ],
+  },
+  {
+    id: "w7",
+    title: "全世界VTuber計画!?",
+    image: "/img/AllVPlan_hero.png",
     tag: "GAME",
+    period: "2025.1 ~ ",
+    client: "個人制作",
+    role: "企画 / UI / イラスト",
+    overview: "",
+    tech: ["Unity", "C#", "UI/UX"],
+    links: [
+      { label: "Demo", href: "https://example.com" },
+      { label: "GitHub", href: "https://github.com/your/repo" },
+    ],
+    gallery: [
+      { src: "/img/AllVPlan_hero.png", alt: "Hero" },
+      { src: "/works/2.png", alt: "Screen" },
+    ],
+  },
+
+  {
+    id: "w8",
+    title: "やってみよう！\nアートプログラミング",
+    image: "/img/ADP.jpg",
+    tag: "OTHER",
+    period: "2025.4 ~ 2025.8",
+    client: "授業課題",
+    role: "企画 / 実装",
+    overview: "",
+    tech: ["Unity", "Python"],
+    links: [
+      {
+        label: "つくばメディアアートフェスティバル2025",
+        href: "https://www.tsukuba-artchannel.jp/page/page000181.html",
+      },
+      {
+        label: "Qiita",
+        href: "https://qiita.com/Kamuri96/items/9dcde71581e6d70166ec",
+      },
+    ],
+    gallery: [
+      { src: "/img/ADP.jpg", alt: "Hero" },
+      { src: "/works/2.png", alt: "Screen" },
+    ],
   },
 ];
 
@@ -80,8 +229,8 @@ export const profile: Profile = {
   title: "Engineer / Designer",
   bio: "自身のかわいいと遊びの体験を追求するクリエイター",
   about: [
-    "小さい頃から絵を描いたり、物を作ったりすることがで好きです。",
-    "分野にとらわれない「ものづくり」に取り組んでおり、ゲーム制作、イラスト、Web開発、映像、3Dモデル、金属加工など様々なものづくりに興味を持ち、勉強しています。",
+    "小さい頃から絵を描いたり、物を作ることがで好きです。",
+    "近年は、分野にとらわれない「ものづくり」に取り組んでおり、ゲーム制作、イラスト、Web開発、映像、3Dモデル、金属加工など様々なものづくりに興味を持ち、勉強しています。",
   ],
   experiences: [
     {

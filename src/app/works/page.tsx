@@ -6,21 +6,16 @@ import { SectionTitle } from "@/components/ui/section-title";
 import { works, type WorkItem } from "@/lib/data";
 import { ThumbGrid } from "@/components/ui/work-grid";
 
-const filters: WorkItem["tag"][] = [
-  "ALL",
-  "GAME",
-  "WEB",
-  "PRODUCT",
-  "ILLUST",
-  "OTHER",
-];
+const orderedWorks = [...works].reverse();
+
+const filters: WorkItem["tag"][] = ["ALL", "GAME", "WEB", "PRODUCT", "OTHER"];
 
 export default function WorksPage() {
   const [tag, setTag] = useState<WorkItem["tag"]>("ALL");
 
   const filtered = useMemo(() => {
-    if (tag === "ALL") return works;
-    return works.filter((w) => w.tag === tag);
+    if (tag === "ALL") return orderedWorks;
+    return orderedWorks.filter((w) => w.tag === tag);
   }, [tag]);
 
   return (
@@ -31,10 +26,16 @@ export default function WorksPage() {
         {filters.map((t) => {
           const active = t === tag;
           return (
-            <button key={t} onClick={() => setTag(t)} type="button">
+            <button
+              key={t}
+              onClick={() => setTag(t)}
+              type="button"
+              aria-pressed={t === tag}
+              className="rounded-full focus-visible:outline-none"
+            >
               <Badge
                 className={[
-                  "rounded-full border border-black/15 bg-white text-[10px] tracking-[0.18em] text-black/70 shadow-none",
+                  "rounded-full border border-black/15 bg-white px-3 py-1 text-[11px] tracking-[0.18em] text-black/70 shadow-none",
                   active ? "bg-black text-white" : "hover:bg-black/5",
                 ].join(" ")}
               >

@@ -26,7 +26,7 @@ export function ThumbGrid({
                 sizes="(max-width: 768px) 33vw, 200px"
               />
             </div>
-            <div className="text-center">
+            <div className="text-center whitespace-pre-line">
               <p>{it.title}</p>
             </div>
           </Card>

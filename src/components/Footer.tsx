@@ -12,10 +12,10 @@ const navLinks: FooterLink[] = [
 ];
 
 const socialLinks: FooterLink[] = [
-  { label: "X", href: "https://x.com/your_id", external: true },
-  { label: "GitHub", href: "https://github.com/your_id", external: true },
-  { label: "Zenn", href: "https://zenn.dev/your_id", external: true },
-  { label: "Qiita", href: "https://qiita.com/your_id", external: true },
+  { label: "X", href: "https://x.com/Kamuri_96", external: true },
+  { label: "GitHub", href: "https://github.com/Kamuri96", external: true },
+  { label: "Qiita", href: "https://qiita.com/Kamuri96", external: true },
+  { label: "Zenn", href: "https://zenn.dev/kamuri96", external: true },
 ];
 
 function FooterLinks({ links }: { links: FooterLink[] }) {
@@ -62,7 +62,7 @@ export function Footer() {
           </div>
 
           <p className="mt-6 text-center text-[11px] tracking-[0.18em] text-black/45">
-            © {year} Mitsuki Nakamura. All rights reserved.
+            © {year} Mitsuki Nakamura All rights reserved.
           </p>
         </div>
       </div>

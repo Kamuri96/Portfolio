@@ -21,16 +21,26 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="jp">
+    <html lang="ja">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-[#EFF1FF] antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Skip link */}
+        <a href="#main" className="skip-link">
+          本文へスキップ
+        </a>
+
         <Header />
-        {children}
+
+        <main
+          id="main"
+          className="mx-auto w-full max-w-[980px] px-4 pb-16 pt-6 sm:px-6"
+        >
+          {children}
+        </main>
+
         <Footer />
       </body>
     </html>
