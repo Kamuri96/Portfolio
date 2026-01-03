@@ -40,28 +40,18 @@ export default function ProfilePage() {
       {/* 経歴 */}
       <section className="space-y-4">
         <SectionTitle>EXPERIENCE</SectionTitle>
-        <div className="mx-auto grid max-w-[680px] gap-3">
+        <div className="relative border-l-2 border-blue-100 ml-4 pl-8 space-y-12">
           {profile.experiences.map((ex, i) => (
-            <Card
-              key={i}
-              className="rounded-none border-black/10 bg-white p-4 shadow-none"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-16 shrink-0 text-[11px] tracking-[0.18em] text-black/60">
-                  {ex.period}
-                </div>
-                <div className="min-w-0">
-                  <div className="text-sm font-medium text-black/85">
-                    {ex.headline}
-                  </div>
-                  {ex.detail ? (
-                    <div className="mt-1 text-sm leading-6 text-black/70">
-                      {ex.detail}
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-            </Card>
+            <div key={i} className="relative">
+              <div className="absolute -left-[37px] top-1 h-4 w-4 rounded-full bg-blue-500 border-4 border-white shadow-sm" />
+              <span className="text-[10px] font-bold text-blue-500 tracking-widest">
+                {ex.period}
+              </span>
+              <h3 className="text-lg font-bold mt-1">{ex.headline}</h3>
+              <p className="text-sm text-black/60 mt-2 leading-relaxed">
+                {ex.detail}
+              </p>
+            </div>
           ))}
         </div>
       </section>

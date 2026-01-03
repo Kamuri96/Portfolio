@@ -6,8 +6,8 @@ export default function ArticlesPage() {
   return (
     <div className="space-y-6">
       <SectionTitle className="mt-8">ARTICLES</SectionTitle>
-      <div className="mx-auto max-w-[560px]">
-        <ThumbGrid items={articles} hrefPrefix="/articles" />
+      <div className="mx-auto max-w-[900px]">
+        <ThumbGrid items={articles} hrefPrefix="/articles" type="articles" />
       </div>
     </div>
   );

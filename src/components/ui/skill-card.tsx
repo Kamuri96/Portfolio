@@ -1,41 +1,24 @@
-import Image from "next/image";
-import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
-type SkillItem = {
-  name: string;
-  icon: string;
-  experience: string;
-  description: string;
-};
-
-export function SkillCard({ item }: { item: SkillItem }) {
+export function SkillCard({
+  item,
+}: {
+  item: { name: string; description: string };
+}) {
   return (
-    <Card className="rounded-none border-black/10 bg-white p-0 shadow-none overflow-hidden">
-      <div className="flex items-stretch">
-        {/* left: round icon */}
-        <div className="flex w-[128px] shrink-0 items-center justify-center border-r border-black/10 px-4 py-5">
-          <div className="h-14 w-14 overflow-hidden rounded-full bg-white ring-1 ring-black/10">
-            <Image
-              src={item.icon}
-              alt={item.name}
-              width={56}
-              height={56}
-              className="h-full w-full object-cover"
-            />
-          </div>
-        </div>
-
-        {/* right: text */}
-        <div className="flex min-w-0 flex-1 flex-col justify-center px-5 py-4">
-          <h3 className="text-sm font-medium text-black/85">{item.name}</h3>
-          <span className="mt-1 text-[11px] tracking-[0.14em] text-black/55">
-            {item.experience}
-          </span>
-          <p className="mt-3 whitespace-pre-line text-sm leading-6 text-black/70">
-            {item.description}
-          </p>
-        </div>
-      </div>
-    </Card>
+    <div
+      className={cn(
+        "p-6 rounded-2xl bg-white/40 border border-black/[0.03] backdrop-blur-sm", // 角丸を2xlに、背景を半透明に
+        "transition-all duration-300 ease-out", // アニメーションを滑らかに
+        "hover:border-blue-200 hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1" // ホバー時の浮き上がり
+      )}
+    >
+      <h4 className="text-[11px] font-bold tracking-[0.2em] text-blue-500 mb-3 uppercase">
+        {item.name}
+      </h4>
+      <p className="text-sm text-black/60 leading-relaxed italic">
+        {item.description}
+      </p>
+    </div>
   );
 }

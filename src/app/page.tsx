@@ -5,7 +5,6 @@ import { Separator } from "@/components/ui/separator";
 import { SectionTitle } from "@/components/ui/section-title";
 import { works, articles } from "@/lib/data";
 import { ThumbGrid } from "@/components/ui/work-grid";
-import { Card } from "@/components/ui/card";
 
 const latestWorks = works.slice(-3).reverse();
 const latestArticles = articles.slice(0, 3);
@@ -34,47 +33,51 @@ function SectionHeader({
 
 export default function TopPage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-20 pb-20">
+      {" "}
       {/* Hero */}
-      <section aria-label="Hero" className="space-y-6">
-        <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-          <Card className="overflow-hidden rounded-none border-black/10 bg-white p-0 shadow-none">
-            <div className="relative aspect-[16/9] w-full">
-              <Image
-                src="/hero.png"
-                alt="ポートフォリオのキービジュアル"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 720px"
-                priority
-              />
-            </div>
-          </Card>
+      <section aria-label="Hero" className="relative pt-10">
+        <div className="absolute -top-20 -left-20 h-64 w-64 rounded-full bg-blue-200/30 blur-3xl animate-pulse" />
 
-          <div className="flex flex-col justify-center gap-4">
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-center">
+          <div className="relative overflow-hidden rounded-2xl shadow-2xl transition-transform duration-500 hover:scale-[1.02]">
+            <Image
+              src="/hero.png"
+              alt="HERO"
+              width={720}
+              height={405}
+              className="object-cover"
+              priority
+            />
+          </div>
+
+          <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom duration-1000">
             <div>
-              <p className="text-[12px] tracking-[0.25em] text-black/60">
+              <p className="text-[12px] font-bold tracking-[0.4em] text-blue-500/80">
                 PORTFOLIO
               </p>
-              <h1 className="mt-2 text-xl font-medium leading-tight text-black/90">
-                体験を形にするデザインと実装
+              <h1 className="mt-4 text-3xl font-bold leading-tight text-black/90 lg:text-4xl">
+                体験を形にする
+                <br />
+                デザインと実装
               </h1>
-              <p className="mt-3 text-sm leading-7 text-black/70">
-                ゲーム・Webアプリ・プロダクトなど、遊び心を大切にしながら制作しています。
-                作品の背景や意図が伝わるよう、情報設計も重視しています。
+              <p className="mt-6 text-sm leading-8 text-black/60">
+                多角的な視点を持つことを大切に、
+                <br />
+                遊び心を大切にしたデジタル体験を制作しています。
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-4">
               <Link
                 href="/works"
-                className="inline-flex items-center justify-center rounded-none border border-black/15 bg-black px-4 py-2 text-xs tracking-[0.18em] text-white hover:bg-black/90"
+                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-black px-8 py-3 text-xs font-bold tracking-widest text-white transition-all hover:bg-blue-600"
               >
-                WORKS を見る
+                <span className="relative z-10">VIEW WORKS</span>
               </Link>
               <Link
                 href="/profile"
-                className="inline-flex items-center justify-center rounded-none border border-black/15 bg-white px-4 py-2 text-xs tracking-[0.18em] text-black/70 hover:bg-black/5"
+                className="inline-flex items-center justify-center rounded-full border border-black/10 bg-white/50 px-8 py-3 text-xs font-bold tracking-widest text-black/70 backdrop-blur-sm transition-all hover:bg-white hover:border-blue-300"
               >
                 PROFILE
               </Link>
@@ -82,23 +85,23 @@ export default function TopPage() {
           </div>
         </div>
       </section>
-
-      <Separator className="bg-black/10" />
-
-      {/* Profile teaser */}
-      <section className="space-y-4" aria-label="Profile">
-        <SectionTitle>PROFILE</SectionTitle>
-
-        <div className="mx-auto grid max-w-[820px] gap-4 sm:grid-cols-[auto_1fr] sm:items-center">
-          <Avatar className="h-20 w-20 border border-black/10">
-            <AvatarImage src="/img/icon.png" alt="プロフィール画像" />
-          </Avatar>
-
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
+      <section className="rounded-3xl bg-blue-50/50 p-8 md:p-12 border border-blue-100/50">
+        <SectionTitle className="mb-8">PROFILE</SectionTitle>
+        <div className="grid gap-8 md:grid-cols-[auto_1fr] items-center">
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full" />
+            <Avatar className="h-24 w-24 border-2 border-white shadow-lg">
+              <AvatarImage src="/img/icon.png" alt="プロフィール画像" />
+            </Avatar>
+          </div>
           <div className="space-y-2">
             <p className="text-sm leading-7 text-black/75">
               筑波大学大学院デザイン学学位プログラムでプロダクトデザインを学んでいます。
+              <br />
               遊び心を大切にしながら、ゲーム・Webアプリケーション・プロダクトなど、
-              様々なものづくりに取り組んでいます。
+              <br />
+              分野にとらわれない様々なものづくりに取り組んでいます。
             </p>
             <Link
               href="/profile"
@@ -109,24 +112,49 @@ export default function TopPage() {
           </div>
         </div>
       </section>
-
       <Separator className="bg-black/10" />
+      {/* Works Section */}
+      <section className="space-y-10" aria-label="Latest works">
+        <div className="flex items-baseline justify-between border-b border-black/[0.03] pb-4">
+          <SectionTitle>WORKS</SectionTitle>
+        </div>
 
-      {/* Works */}
-      <section className="space-y-4" aria-label="Latest works">
-        <SectionHeader title="WORKS" href="/works" />
-        <div className="mx-auto max-w-[820px]">
-          <ThumbGrid items={latestWorks} hrefPrefix="/works" />
+        <div className="mx-auto max-w-[900px]">
+          <ThumbGrid items={latestWorks} hrefPrefix="/works" type="works" />
+        </div>
+
+        <div className="flex justify-center pt-4">
+          <Link
+            href="/works"
+            className="group flex items-center gap-4 text-[11px] tracking-[0.3em] text-black/50 hover:text-blue-600 transition-all duration-300"
+          >
+            <span className="h-[1px] w-8 bg-black/10 transition-all group-hover:w-12 group-hover:bg-blue-600" />
+            VIEW ALL WORKS
+          </Link>
         </div>
       </section>
+      {/* Articles Section */}
+      <section className="space-y-10" aria-label="Latest articles">
+        <div className="flex items-baseline justify-between border-b border-black/[0.03] pb-4">
+          <SectionTitle>ARTICLES</SectionTitle>
+        </div>
 
-      <Separator className="bg-black/10" />
+        <div className="mx-auto max-w-[900px]">
+          <ThumbGrid
+            items={latestArticles}
+            hrefPrefix="/articles"
+            type="articles"
+          />
+        </div>
 
-      {/* Articles */}
-      <section className="space-y-4" aria-label="Latest articles">
-        <SectionHeader title="ARTICLES" href="/articles" />
-        <div className="mx-auto max-w-[820px]">
-          <ThumbGrid items={latestArticles} hrefPrefix="/articles" />
+        <div className="flex justify-center pt-4">
+          <Link
+            href="/articles"
+            className="group flex items-center gap-4 text-[11px] tracking-[0.3em] text-black/50 hover:text-blue-600 transition-all duration-300"
+          >
+            <span className="h-[1px] w-8 bg-black/10 transition-all group-hover:w-12 group-hover:bg-blue-600" />
+            READ ALL ARTICLES
+          </Link>
         </div>
       </section>
     </div>

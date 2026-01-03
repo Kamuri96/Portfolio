@@ -3,14 +3,6 @@ import { Separator } from "@/components/ui/separator";
 
 type FooterLink = { label: string; href: string; external?: boolean };
 
-const navLinks: FooterLink[] = [
-  { label: "TOP", href: "/" },
-  { label: "PROFILE", href: "/profile" },
-  { label: "WORKS", href: "/works" },
-  { label: "ARTICLES", href: "/articles" },
-  { label: "CONTACT", href: "/contact" },
-];
-
 const socialLinks: FooterLink[] = [
   { label: "X", href: "https://x.com/Kamuri_96", external: true },
   { label: "GitHub", href: "https://github.com/Kamuri96", external: true },
@@ -54,17 +46,13 @@ export function Footer() {
       <div className="mx-auto max-w-[820px] px-6">
         <Separator className="bg-black/10" />
 
-        <div className="py-10">
-          <FooterLinks links={navLinks} />
-
-          <div className="mt-5">
-            <FooterLinks links={socialLinks} />
-          </div>
-
-          <p className="mt-6 text-center text-[11px] tracking-[0.18em] text-black/45">
-            © {year} Mitsuki Nakamura All rights reserved.
-          </p>
+        <div className="mt-5">
+          <FooterLinks links={socialLinks} />
         </div>
+
+        <p className="mt-6 text-center text-[11px] tracking-[0.18em] text-black/45">
+          © {year} Mitsuki Nakamura All rights reserved.
+        </p>
       </div>
     </footer>
   );
