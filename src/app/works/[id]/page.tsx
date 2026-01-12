@@ -32,6 +32,12 @@ function InfoBlock({
   );
 }
 
+export async function generateStaticParams() {
+  return works.map((work) => ({
+    id: work.id,
+  }));
+}
+
 export default async function WorkDetailPage({ params }: Props) {
   const resolved = await resolveParams(params);
   const work = works.find((w) => w.id === resolved.id);
