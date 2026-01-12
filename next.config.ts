@@ -8,7 +8,6 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
 
   images: {
-    unoptimized: true,
     remotePatterns: [
       { protocol: "https", hostname: "cdn.qiita.com" },
       { protocol: "https", hostname: "zenn.dev" },
@@ -16,6 +15,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "qiita-user-contents.imgix.net" },
       { protocol: "https", hostname: "res.cloudinary.com" },
     ],
+    loader: "custom",
+    loaderFile: "src/imageLoader.ts",
   },
   devIndicators: false,
 };
