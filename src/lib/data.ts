@@ -150,7 +150,7 @@ export const works: WorkItem[] = [
   {
     id: "w6",
     title: "天使と悪魔の\nTODOリスト",
-    image: "/img/Angel_Devil_Todo_hero.jpg",
+    image: "/img/Angel_Devil/AD1.jpg",
     tag: "PRODUCT",
     period: "2025.4 ~ 5",
     client: "授業課題",
@@ -180,7 +180,7 @@ export const works: WorkItem[] = [
   {
     id: "w7",
     title: "全世界VTuber計画!?",
-    image: "/img/AllVPlan_hero.png",
+    image: "/img/AllVPlan/AllVPlan_hero.png",
     tag: "GAME",
     period: "2025.1 ~ ",
     client: "個人制作",
@@ -206,7 +206,7 @@ export const works: WorkItem[] = [
   {
     id: "w8",
     title: "やってみよう！\nアートプログラミング",
-    image: "/img/ADP.jpg",
+    image: "/img/ADP/ADP.jpg",
     tag: "OTHER",
     period: "2025.4 ~ 2025.8",
     client: "授業課題",
