@@ -165,14 +165,14 @@ export const works: WorkItem[] = [
       },
     ],
     gallery: [
-      { src: "/img/Angel_Devil/AD1.JPG", alt: "プロダクト写真" },
-      { src: "/img/Angel_Devil/AD2.JPG", alt: "着用イメージ" },
+      { src: "/img/Angel_Devil/AD1.jpg", alt: "プロダクト写真" },
+      { src: "/img/Angel_Devil/AD2.jpg", alt: "着用イメージ" },
       {
-        src: "/img/Angel_Devil/AD3.JPG",
+        src: "/img/Angel_Devil/AD3.jpg",
         alt: "Maker Faire Tokyoでの展示の様子",
       },
       {
-        src: "/img/Angel_Devil/AD4.JPG",
+        src: "/img/Angel_Devil/AD4.jpg",
         alt: "Maker Faire Tokyoでの展示の様子",
       },
     ],
