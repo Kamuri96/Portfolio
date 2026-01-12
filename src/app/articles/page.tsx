@@ -2,6 +2,8 @@ import { SectionTitle } from "@/components/ui/section-title";
 import { getArticles } from "@/lib/rss";
 import { ThumbGrid } from "@/components/ui/work-grid";
 
+export const revalidate = 86400;
+
 export default async function ArticlesPage() {
   const articles = await getArticles();
 

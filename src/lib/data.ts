@@ -44,33 +44,34 @@ export const works: WorkItem[] = [
   {
     id: "w1",
     title: "いっぱい食べる\nキミが好き！",
-    image: "/img/ippai_taberu.png",
+    image: "/img/IppaiTaberu/4.png",
     tag: "GAME",
     period: "2022.6 ~ 2022.7",
     client: "個人制作",
     role: "企画 / 実装 / UIデザイン",
     overview:
-      "初めての個人制作作品です。\n 時間内にフィールド内のアイテムを拾い、スコアを集める3Dゲームです。\n ゲーム内のUIを全て手描きで制作し、ゲームの世界観を統一しました。",
+      "初めての個人制作ゲームです。\n 時間内にフィールド内のアイテムを拾い、スコアを集める3Dゲームです。\n ゲーム内のUIを全て手描きで制作し、ゲームの世界観を統一しました。",
     tech: ["Unity", "C#", "IbisPaint"],
     links: [
       { label: "Unityroom", href: "https://unityroom.com/games/ippai_taberu" },
       { label: "GitHub", href: "https://github.com/Kamuri96/OriginalGame" },
     ],
     gallery: [
-      { src: "/img/AllVPlan_hero.png", alt: "Hero" },
-      { src: "/works/2.png", alt: "Screen" },
+      { src: "/img/IppaiTaberu/4.png", alt: "紹介ページ1" },
+      { src: "/img/IppaiTaberu/5.png", alt: "紹介ページ2" },
+      { src: "/img/IppaiTaberu/6.png", alt: "紹介ページ3" },
     ],
   },
   {
     id: "w2",
     title: "Colorful Umiushi!",
-    image: "/img/umiushi.png",
+    image: "/img/Umiushi/7.png",
     tag: "GAME",
     period: "2023.2 ~ 2023.3",
     client: "個人制作",
     role: "企画 / 実装 / UIデザイン",
     overview:
-      "色の混ぜ合わせや補色などの、色の性質を用いたパズルゲームです。\n 背景やプレイヤー、ゲーム内オブジェクトを全て手描きし、世界観を統一しました。\n ステージが進むにつれ、色の数や見える範囲を変化させるなど、レベルデザインに注意を払いました。",
+      "色の混ぜ合わせや補色などの、色の性質を用いたパズルゲームです。\n 背景やプレイヤー、ゲーム内オブジェクトのドット絵を全て手描きし、世界観を統一しました。\n ステージが進むにつれ、色の数や見える範囲を変化させるなど、レベルデザインに注意を払いました。",
     tech: ["Unity", "C#", "IbisPaint"],
     links: [
       {
@@ -80,20 +81,21 @@ export const works: WorkItem[] = [
       { label: "GitHub", href: "https://github.com/Kamuri96/LA_Original" },
     ],
     gallery: [
-      { src: "/img/umiushi.png", alt: "Hero" },
-      { src: "/works/2.png", alt: "Screen" },
+      { src: "/img/Umiushi/7.png", alt: "紹介ページ1" },
+      { src: "/img/Umiushi/8.png", alt: "紹介ページ2" },
+      { src: "/img/Umiushi/9.png", alt: "紹介ページ3" },
     ],
   },
   {
     id: "w3",
     title: "バトム！",
-    image: "/img/battm.png",
+    image: "/img/battm/BattmLogo.png",
     tag: "GAME",
     period: "2023.7",
     client: "個人制作",
     role: "企画 / アニメーション実装 / UIデザイン",
     overview:
-      "技育CAMPハッカソンで制作した作品です。\n 学生が、実験のように手を動かしながらゲーム感覚で化学を勉強できるゲームというコンセプトで制作しました。\n マッチング時やリザルト表示にアニメーションをつけたり、分子のオブジェクトをふわふわ動かしたりなど、常に画面に飽きのこないデザインを心がけました。",
+      "技育CAMPハッカソンで制作した作品です。\n 学生が実験のように手を動かしながら、ゲーム感覚で化学を勉強できるゲームというコンセプトで制作しました。\n マッチング時やリザルト表示にアニメーションをつけたり、分子のオブジェクトをふわふわ動かしたりなど、常に画面に飽きのこないデザインを心がけました。",
     tech: ["Unity", "C#", "PhotoShop", "ClipStudioPaint"],
     links: [
       {
@@ -102,14 +104,16 @@ export const works: WorkItem[] = [
       },
     ],
     gallery: [
-      { src: "/img/battm.png", alt: "Hero" },
-      { src: "/works/2.png", alt: "Screen" },
+      { src: "/img/battm/10.png", alt: "紹介ページ1" },
+      { src: "/img/battm/11.png", alt: "紹介ページ2" },
+      { src: "/img/battm/12.png", alt: "紹介ページ3" },
+      { src: "/img/battm/13.png", alt: "紹介ページ4" },
     ],
   },
   {
     id: "w4",
     title: "Cocoiko",
-    image: "/img/cocoiko.png",
+    image: "/img/cocoiko/cocoikoLogo.png",
     tag: "WEB",
     period: "2024.6",
     client: "個人制作",
@@ -118,8 +122,12 @@ export const works: WorkItem[] = [
       "技育CAMPハッカソンで制作した作品です。\n 全員がWebアプリケーション初心者の中、普段自分たちが出かける際の悩みを解決するアプリケーションを制作しました。\n 行きたいところ選びから日程調整まで一つのアプリで簡潔する便利さと、思わず使いたくなる可愛らしいデザインを心がけました。",
     tech: ["HTML", "CSS", "JavaScript", "React", "FireBase"],
     gallery: [
-      { src: "/img/cocoiko.png", alt: "Hero" },
-      { src: "/works/2.png", alt: "Screen" },
+      { src: "/img/cocoiko/cocoiko1.png", alt: "Topページ" },
+      {
+        src: "/img/cocoiko/cocoiko2.png",
+        alt: "行きたいところを追加するページ",
+      },
+      { src: "/img/cocoiko/cocoiko3.png", alt: "カレンダーページ" },
     ],
   },
   {

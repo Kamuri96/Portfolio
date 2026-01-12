@@ -7,6 +7,8 @@ import { ThumbGrid } from "@/components/ui/work-grid";
 import { getArticles } from "@/lib/rss";
 import { HeroSlider } from "@/components/ui/HeroSlider";
 
+export const revalidate = 86400;
+
 export default async function TopPage() {
   const latestWorks = works.slice(-3).reverse();
   const allArticles = await getArticles();
@@ -29,7 +31,7 @@ export default async function TopPage() {
               </h1>
               <p className="mt-6 text-sm leading-8 text-black/60 whitespace-pre-line">
                 多角的な視点を持つことを大切に、{"\n"}
-                遊び心を大切にしたデジタル体験を制作しています。
+                遊び心を大切に、ものづくりに取り組んでいます。
               </p>
             </div>
             <div className="flex flex-wrap gap-4">
