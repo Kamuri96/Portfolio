@@ -22,7 +22,7 @@ export default function WorksPage() {
     <div className="space-y-6">
       <SectionTitle className="mt-8">WORKS</SectionTitle>
 
-      <div className="flex justify-center gap-8 border-b border-black/[0.05] pb-4 mb-12">
+      <div className="flex justify-center gap-8 border-b border-black/5 pb-4 mb-12">
         {filters.map((t) => (
           <button
             key={t}
@@ -42,7 +42,6 @@ export default function WorksPage() {
         ))}
       </div>
       <div className="mx-auto max-w-[900px]">
-        {/* key={tag} を残すことで、フィルター切り替え時も「バーっと」再描画されます */}
         <ThumbGrid
           key={tag}
           items={filtered}

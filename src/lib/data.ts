@@ -18,6 +18,8 @@ export type ArticleItem = {
   id: string;
   title: string;
   image: string;
+  pubDate: string;
+  platform: "Qiita" | "Zenn" | "note";
 };
 
 export type Profile = {
@@ -34,7 +36,6 @@ export type Profile = {
 
 export type SkillItem = {
   name: string;
-  icon: string;
   experience: string;
   description: string;
 };
@@ -124,7 +125,7 @@ export const works: WorkItem[] = [
   {
     id: "w5",
     title: "マドライズ",
-    image: "/img/Madlize.png",
+    image: "/img/Madlize/Madlize.png",
     tag: "GAME",
     period: "2025",
     client: "個人制作",
@@ -133,8 +134,9 @@ export const works: WorkItem[] = [
       "HackUで制作した作品です。\n 二人で遊ぶ体験型の作品で、画面上で手の形に応じた魔法が自身の手から放たれ、その魔法を用いて敵を倒していきます。\n  HackUでは参加者投票1位のHappy Hacking賞をいただきました。",
     tech: ["Unity", "C#", "MediaPipe", "Photoshop"],
     gallery: [
-      { src: "/img/Madlize.png", alt: "Hero" },
-      { src: "/works/2.png", alt: "Screen" },
+      { src: "/img/Madlize/MadlizeLogo.png", alt: "ロゴ" },
+      { src: "/img/Madlize/MadlizePlay.png", alt: "プレイの様子" },
+      { src: "/img/Madlize/Madla.png", alt: "魔法一覧" },
     ],
   },
   {
@@ -146,7 +148,7 @@ export const works: WorkItem[] = [
     client: "授業課題",
     role: "企画 / アプリ実装",
     overview:
-      "大学院のプロジェクトで制作した作品です。\n ウェブアプリケーション上で登録したタスクの進行度に合わせ、背中に装着する天使と悪魔のデバイスが視覚や触覚でフィードバックする、新しいタスク管理の形として制作しました。",
+      "大学院のプロジェクトで制作した作品です。\n ウェブアプリケーション上で登録したタスクの進行度に合わせ、肩に装着する天使と悪魔のデバイスが視覚や触覚でフィードバックする、新しいタスク管理の形として制作しました。",
     tech: ["Arduino", "C++", "TypeScript", "React"],
     links: [
       {
@@ -155,8 +157,16 @@ export const works: WorkItem[] = [
       },
     ],
     gallery: [
-      { src: "/img/Angel_Devil_Todo_hero.jpg", alt: "Hero" },
-      { src: "/works/2.png", alt: "Screen" },
+      { src: "/img/Angel_Devil/AD1.JPG", alt: "プロダクト写真" },
+      { src: "/img/Angel_Devil/AD2.JPG", alt: "着用イメージ" },
+      {
+        src: "/img/Angel_Devil/AD3.JPG",
+        alt: "Maker Faire Tokyoでの展示の様子",
+      },
+      {
+        src: "/img/Angel_Devil/AD4.JPG",
+        alt: "Maker Faire Tokyoでの展示の様子",
+      },
     ],
   },
   {
@@ -168,14 +178,20 @@ export const works: WorkItem[] = [
     client: "個人制作",
     role: "企画 / UIデザイン / イラスト / グッズ制作",
     overview:
-      "東京ゲームダンジョンに出展している作品です。\n VTuberの女の子と共にさまざまなミニゲームをクリアし、世界を救うという世界観のゲームです。\n 出展に伴い、ゲーム開発だけでなくSNSでの広報やグッズ制作などにも注力しています。",
+      "東京ゲームダンジョンに継続的に出展している作品です。\n VTuberの女の子と共にさまざまなミニゲームをクリアし、一緒に世界を救おう!という世界観のゲームです。\n 出展に伴い、ゲーム開発だけでなくSNSでの広報やグッズ制作などにも注力しています。",
     tech: ["Unity", "C#", "PhotoShop", "ClipStudioPaint"],
-    links: [{ label: "東京ゲームダンジョン", href: "https://example.com" }],
+    links: [
+      { label: "X", href: "https://x.com/technya_studio" },
+      {
+        label: "東京ゲームダンジョン",
+        href: "https://tokyogamedungeon.com/",
+      },
+    ],
     gallery: [
-      { src: "/img/AllVPlan_hero.png", alt: "Hero" },
-      { src: "/works/2.png", alt: "Screen" },
-      { src: "/works/2.png", alt: "Screen" },
-      { src: "/works/2.png", alt: "Screen" },
+      { src: "/img/AllVPlan/AllVPlan_hero.png", alt: "メインビジュアル" },
+      { src: "/img/AllVPlan/AllVPlanAnim.gif", alt: "アニメーション" },
+      { src: "/img/AllVPlan/AllVPlanSD.png", alt: "SDイラスト" },
+      { src: "/img/AllVPlan/AllVPlanTalk.png", alt: "缶バッチイラスト" },
     ],
   },
 
@@ -188,7 +204,7 @@ export const works: WorkItem[] = [
     client: "授業課題",
     role: "企画 / 実装",
     overview:
-      "授業のプロジェクトの一環で、つくば市のイベントで行ったワークショップです。\n 子どもに作品作りとプログラミングを身近に感じてもらうことを目的に企画を行いました。\n ワークショップの成果はデザイン学会学生プロポジションで発表し、優秀賞をいただきました。",
+      "授業のプロジェクトの一環で、つくば市のイベントで行ったワークショップです。\n 美術館に来た子どもたちに、自分の作品を作ることとプログラミングを身近に感じてもらうことを目的に、企画、実装、運営を行いました。\n ワークショップの成果はデザイン学会秋季大会の学生プロポジションでポスター発表し、優秀賞をいただきました。",
     tech: ["Unity", "Python"],
     links: [
       {
@@ -201,22 +217,10 @@ export const works: WorkItem[] = [
       },
     ],
     gallery: [
-      { src: "/img/ADP.jpg", alt: "Hero" },
-      { src: "/works/2.png", alt: "Screen" },
+      { src: "/img/ADP/ADP.jpg", alt: "展示の様子" },
+      { src: "/img/ADP/ADP2.jpg", alt: "ワークショップの様子" },
     ],
   },
-];
-
-export const articles: ArticleItem[] = [
-  { id: "a1", title: "Article 01", image: "/articles/1.png" },
-  { id: "a2", title: "Article 02", image: "/articles/2.png" },
-  { id: "a3", title: "Article 03", image: "/articles/3.png" },
-  { id: "a4", title: "Article 04", image: "/articles/4.png" },
-  { id: "a5", title: "Article 05", image: "/articles/5.png" },
-  { id: "a6", title: "Article 06", image: "/articles/6.png" },
-  { id: "a7", title: "Article 07", image: "/articles/7.png" },
-  { id: "a8", title: "Article 08", image: "/articles/8.png" },
-  { id: "a9", title: "Article 09", image: "/articles/9.png" },
 ];
 
 export const profile: Profile = {
@@ -225,7 +229,7 @@ export const profile: Profile = {
   bio: "かわいいと遊びの体験を追求するクリエイター",
   about: [
     "小さい頃から絵を描いたり、物を作ることがで好きです。",
-    "近年は、分野にとらわれない「ものづくり」に取り組んでおり、ゲーム制作、イラスト、Web開発、映像、3Dモデル、金属加工など様々なものづくりに興味を持ち、勉強しています。",
+    "分野にとらわれない「ものづくり」にを目標に、ゲーム制作、イラスト、Web開発、映像、3Dモデル、金属加工など様々なものづくりに興味を持ち、日々制作に取り組んでいます。",
   ],
   experiences: [
     {
@@ -261,37 +265,31 @@ export const profile: Profile = {
 export const skillItems: SkillItem[] = [
   {
     name: "Unity",
-    icon: "/icons/ps.png",
     experience: "2022~",
     description: "個人/チームでのゲーム制作、指導の経験",
   },
   {
     name: "Ruby",
-    icon: "/icons/ps.png",
     experience: "2025~",
     description: "Ruby on Railsでの就業型インターン経験",
   },
   {
     name: "Next.js / React",
-    icon: "/icons/ps.png",
     experience: "2024~",
     description: "Webサイト制作",
   },
   {
     name: "Figma",
-    icon: "/icons/ps.png",
     experience: "2024~",
     description: "ワイヤー、UI設計",
   },
   {
     name: "Photoshop",
-    icon: "/icons/ps.png",
     experience: "2023~",
     description: "UI制作、ポスターデザイン、グッズデザインなど",
   },
   {
     name: "ClipStudioPaint",
-    icon: "/icons/ps.png",
     experience: "2023~",
     description: "イラスト制作、ロゴ制作、UI制作など",
   },

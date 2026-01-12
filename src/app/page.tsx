@@ -1,67 +1,25 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { SectionTitle } from "@/components/ui/section-title";
-import { works, articles } from "@/lib/data";
+import { works } from "@/lib/data";
 import { ThumbGrid } from "@/components/ui/work-grid";
-import { cn } from "@/lib/utils";
+import { getArticles } from "@/lib/rss";
+import { HeroSlider } from "@/components/ui/HeroSlider";
 
-const latestWorks = works.slice(-3).reverse();
-const latestArticles = articles.slice(0, 3);
-
-export default function TopPage() {
+export default async function TopPage() {
+  const latestWorks = works.slice(-3).reverse();
+  const allArticles = await getArticles();
+  const latestArticles = allArticles.slice(0, 3);
   const heroImages = latestWorks.map((w) => w.image);
-  const [currentIdx, setCurrentIdx] = useState(0);
-
-  useEffect(() => {
-    if (heroImages.length <= 1) return;
-    const timer = setInterval(() => {
-      setCurrentIdx((prev) => (prev + 1) % heroImages.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [heroImages.length]);
 
   return (
     <div className="space-y-24 pb-20">
-      <section aria-label="Hero" className="relative pt-10">
+      {/* Hero Section */}
+      <section className="relative pt-10">
         <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-center">
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl shadow-2xl bg-black/5 animate-in fade-in duration-1000">
-            {heroImages.map((src, idx) => (
-              <div
-                key={src}
-                className={cn(
-                  "absolute inset-0 transition-opacity duration-1000 ease-in-out",
-                  idx === currentIdx ? "opacity-100 z-10" : "opacity-0 z-0"
-                )}
-              >
-                <Image
-                  src={src}
-                  alt="Selected work"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 720px"
-                  priority={idx === 0}
-                />
-              </div>
-            ))}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-              {heroImages.map((_, idx) => (
-                <div
-                  key={idx}
-                  className={cn(
-                    "h-1 transition-all duration-500 rounded-full",
-                    idx === currentIdx ? "w-6 bg-white" : "w-2 bg-white/40"
-                  )}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-right-4 duration-1000 ease-out">
+          <HeroSlider images={heroImages} />
+          <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-right-4 duration-1000">
             <div>
               <p className="text-[12px] font-bold tracking-[0.4em] text-blue-500/80 uppercase">
                 PORTFOLIO
@@ -74,7 +32,6 @@ export default function TopPage() {
                 遊び心を大切にしたデジタル体験を制作しています。
               </p>
             </div>
-
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/works"
@@ -93,6 +50,7 @@ export default function TopPage() {
         </div>
       </section>
 
+      {/* Plofile Section */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
       <section className="rounded-3xl bg-blue-50/50 p-8 md:p-12 border border-blue-100/50">
         <SectionTitle className="mb-8">PROFILE</SectionTitle>
@@ -123,15 +81,11 @@ export default function TopPage() {
       <Separator className="bg-black/10" />
 
       {/* Works Section */}
-      <section className="space-y-10" aria-label="Latest works">
-        <div className="flex items-baseline justify-between border-b border-black/[0.03] pb-4">
+      <section className="space-y-10">
+        <div className="flex items-baseline justify-between border-b border-black/5 pb-4">
           <SectionTitle>WORKS</SectionTitle>
         </div>
-
-        <div className="mx-auto max-w-[900px]">
-          <ThumbGrid items={latestWorks} hrefPrefix="/works" type="works" />
-        </div>
-
+        <ThumbGrid items={latestWorks} hrefPrefix="/works" type="works" />
         <div className="flex justify-center pt-4">
           <Link
             href="/works"
@@ -143,22 +97,17 @@ export default function TopPage() {
         </div>
       </section>
 
-      <Separator className="bg-black/[0.05]" />
+      <Separator className="bg-black/10" />
 
-      {/* Articles Section */}
-      <section className="space-y-10" aria-label="Latest articles">
-        <div className="flex items-baseline justify-between border-b border-black/[0.03] pb-4">
+      <section className="space-y-10">
+        <div className="flex items-baseline justify-between border-b border-black/5 pb-4">
           <SectionTitle>ARTICLES</SectionTitle>
         </div>
-
-        <div className="mx-auto max-w-[900px]">
-          <ThumbGrid
-            items={latestArticles}
-            hrefPrefix="/articles"
-            type="articles"
-          />
-        </div>
-
+        <ThumbGrid
+          items={latestArticles}
+          hrefPrefix="/articles"
+          type="articles"
+        />
         <div className="flex justify-center pt-4">
           <Link
             href="/articles"
