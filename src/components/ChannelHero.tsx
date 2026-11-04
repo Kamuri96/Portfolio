@@ -1,8 +1,10 @@
 "use client";
 // トップのヒーロー。最新作をテレビのチャンネルのように切り替えて映す
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ScreenGlitch, type ScreenGlitchHandle } from "@/components/ScreenGlitch";
+import { BOOT_DONE_EVENT } from "@/components/BootScreen";
 
 export type Channel = {
   slug: string;
@@ -87,11 +89,26 @@ export function ChannelHero({ name, channels }: { name: string; channels: Channe
   const clock = useClock();
   const ch = channels[idx];
 
-  const go = useCallback((next: number) => {
-    setSwitching(true);
-    setIdx(next);
-    setTimeout(() => setSwitching(false), 260);
-  }, []);
+  const glitch = useRef<ScreenGlitchHandle>(null);
+
+  const go = useCallback(
+    (next: number) => {
+      setIdx(next);
+      // WebGL の演出が使えないときは CSS の砂嵐を出す
+      if (!glitch.current?.play(channels[next].image)) {
+        setSwitching(true);
+        setTimeout(() => setSwitching(false), 260);
+      }
+    },
+    [channels]
+  );
+
+  // 起動演出が終わった瞬間にも 1 回だけ映像を乱す
+  useEffect(() => {
+    const onBoot = () => glitch.current?.play(channels[0].image);
+    window.addEventListener(BOOT_DONE_EVENT, onBoot);
+    return () => window.removeEventListener(BOOT_DONE_EVENT, onBoot);
+  }, [channels]);
 
   useEffect(() => {
     // 動きを減らす設定のときは自動で切り替えない
@@ -121,6 +138,7 @@ export function ChannelHero({ name, channels }: { name: string; channels: Channe
             className={`object-cover transition-opacity duration-300 ${i === idx ? "opacity-70" : "opacity-0"}`}
           />
         ))}
+        <ScreenGlitch ref={glitch} />
         <div className="screen-shade absolute inset-0" />
         <div className={`screen-static absolute inset-0 ${switching ? "opacity-100" : "opacity-0"}`} aria-hidden />
         <div className="screen-scan absolute inset-0" aria-hidden />

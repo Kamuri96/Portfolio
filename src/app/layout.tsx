@@ -3,6 +3,8 @@ import { Chakra_Petch } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { bootInitScript } from "@/components/BootScreen";
+import { GridBackground } from "@/components/GridBackground";
 import {
   BASE_OPEN_GRAPH,
   ogImage,
@@ -39,10 +41,15 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ja">
+    // 起動演出の有無を描画前のスクリプトで <html data-boot> に書くため、サーバーの HTML と差が出る
+    <html lang="ja" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: bootInitScript }} />
+      </head>
       <body
         className={`${chakra.variable} antialiased`}
       >
+        <GridBackground />
         <a href="#main" className="skip-link">
           本文へスキップ
         </a>

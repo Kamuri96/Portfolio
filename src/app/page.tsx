@@ -5,6 +5,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { WorkGrid } from "@/components/WorkCard";
 import { ArticleList } from "@/components/ArticleList";
 import { IllustGallery } from "@/components/IllustGallery";
+import { BootScreen } from "@/components/BootScreen";
 
 const HERO_CHANNELS = 5;
 const TOP_ARTICLES = 4;
@@ -24,6 +25,7 @@ export default async function TopPage() {
 
   return (
     <div className="space-y-28 pb-24 pt-2">
+      <BootScreen />
       <ChannelHero name={getProfile().handle} channels={channels} />
 
       <section className="space-y-8">

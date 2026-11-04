@@ -137,6 +137,18 @@
     0 0 18px color-mix(in oklab, var(--accent) 25%, transparent);
 }
 
+/* 起動演出：<html data-boot> が付いているときだけ出す（src/components/BootScreen.tsx） */
+.boot-screen {
+  display: none;
+}
+html[data-boot] .boot-screen {
+  display: grid;
+  transition: opacity 0.35s;
+}
+html[data-boot="out"] .boot-screen {
+  opacity: 0;
+}
+
 /* ---------- 共通 ---------- */
 
 .skip-link {
