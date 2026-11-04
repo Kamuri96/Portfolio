@@ -42,7 +42,7 @@ export function ThumbGrid(props: ThumbGridProps) {
           >
             {type === "works" ? (
               <div className="flex flex-col gap-5">
-                <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl bg-black/10 shadow-sm transition-all duration-500 group-hover:shadow-xl group-hover:shadow-blue-500/10">
+                <div className="relative aspect-[3/2] w-full overflow-hidden rounded-lg bg-subtle">
                   <Image
                     src={it.image}
                     alt={it.title}
@@ -50,26 +50,26 @@ export function ThumbGrid(props: ThumbGridProps) {
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-500/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 </div>
 
                 <div className="space-y-2 px-1">
                   <div className="flex items-center gap-2">
-                    <span className="h-0.5 w-4 bg-blue-500/50 transition-all duration-500 group-hover:w-8 group-hover:bg-blue-500" />
-                    <p className="text-[10px] font-bold tracking-[0.2em] text-blue-500 uppercase">
+                    <span className="h-px w-4 bg-line transition-all duration-500 group-hover:w-8 group-hover:bg-accent" />
+                    <p className="text-[10px] font-bold tracking-[0.2em] text-ink-3 uppercase">
                       View Project
                     </p>
                   </div>
-                  <h3 className="text-[15px] font-medium leading-snug text-black/80 tracking-tight transition-colors group-hover:text-black whitespace-pre-line">
+                  <h3 className="text-[15px] font-medium leading-snug text-ink tracking-tight whitespace-pre-line">
                     {it.title}
                   </h3>
                 </div>
               </div>
             ) : (
-              <article className="h-full flex flex-col justify-between p-6 rounded-2xl bg-white/40 border border-white/20 backdrop-blur-md transition-all duration-500 hover:bg-white/60 hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1">
+              <article className="h-full flex flex-col justify-between p-6 rounded-lg border border-line bg-surface transition-colors duration-300 group-hover:border-ink-3">
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="relative h-6 w-6 overflow-hidden rounded-full border border-black/5 bg-white">
+                    {/* 各サービスのアイコンは配色に関係なく白地で表示する */}
+                    <div className="relative h-6 w-6 overflow-hidden rounded-full border border-line bg-white">
                       <Image
                         src={it.image}
                         alt={(it as ArticleItem).platformName || "icon"}
@@ -77,18 +77,18 @@ export function ThumbGrid(props: ThumbGridProps) {
                         className="object-cover"
                       />
                     </div>
-                    <span className="text-[10px] font-bold tracking-widest text-blue-500/80">
+                    <span className="text-[10px] font-bold tracking-widest text-ink-3">
                       {(it as ArticleItem).platformName}
                     </span>
                   </div>
-                  <h3 className="text-[15px] font-bold leading-snug text-black/90 line-clamp-3 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-[15px] font-bold leading-snug text-ink line-clamp-3 group-hover:text-accent transition-colors">
                     {it.title}
                   </h3>
                 </div>
-                <div className="mt-6 flex items-center justify-end border-t border-blue-500/10 pt-4">
+                <div className="mt-6 flex items-center justify-end border-t border-line pt-4">
                   <time
                     dateTime={(it as ArticleItem).publishedAt}
-                    className="text-[11px] font-medium text-black/40 tracking-wider"
+                    className="text-[11px] font-medium text-ink-3 tracking-wider"
                   >
                     {formatDate((it as ArticleItem).publishedAt)}
                   </time>

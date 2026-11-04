@@ -19,7 +19,7 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
   }, [slides.length]);
 
   return (
-    <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl shadow-2xl bg-black/5 animate-in fade-in duration-1000">
+    <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg bg-subtle animate-in fade-in duration-1000">
       {slides.map((slide, idx) => (
         <div
           key={slide.src}

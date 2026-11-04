@@ -25,7 +25,7 @@ export default function WorksPage() {
       <div
         role="group"
         aria-label="カテゴリで絞り込む"
-        className="flex justify-center gap-8 border-b border-black/5 pb-4 mb-12"
+        className="flex justify-center gap-8 border-b border-line pb-4 mb-12"
       >
         {filters.map((t) => (
           <button
@@ -36,13 +36,13 @@ export default function WorksPage() {
             className={cn(
               "text-[10px] tracking-[0.2em] transition-all duration-300 relative py-2",
               tag === t
-                ? "text-blue-600 font-bold"
-                : "text-black/40 hover:text-black"
+                ? "text-accent font-bold"
+                : "text-ink-3 hover:text-ink"
             )}
           >
             {t}
             {tag === t && (
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 animate-in fade-in zoom-in duration-300" />
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent animate-in fade-in zoom-in duration-300" />
             )}
           </button>
         ))}

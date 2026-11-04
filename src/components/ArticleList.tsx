@@ -30,7 +30,7 @@ export function ArticleList({ initialArticles, limit }: Props) {
 
   if (items.length === 0) {
     return (
-      <p className="text-center text-black/50 py-10">
+      <p className="text-center text-ink-3 py-10">
         記事が見つかりませんでした。
       </p>
     );

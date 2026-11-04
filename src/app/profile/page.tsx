@@ -15,43 +15,43 @@ export default function ProfilePage() {
     <div className="space-y-10">
       <div className="text-center">
         <SectionTitle className="mt-8">PROFILE</SectionTitle>
-        <h1 className="mt-4 text-lg font-medium text-black/85">
+        <h1 className="mt-4 text-lg font-medium text-ink">
           {profile.name}
         </h1>
-        <p className="mt-1 text-xs tracking-[0.18em] text-black/60">
+        <p className="mt-1 text-xs tracking-[0.18em] text-ink-3">
           {profile.title}
         </p>
-        <p className="mx-auto mt-4 max-w-[560px] text-sm leading-6 text-black/75">
+        <p className="mx-auto mt-4 max-w-[560px] text-sm leading-6 text-ink-2">
           {profile.bio}
         </p>
       </div>
 
-      <Separator className="bg-black/10" />
+      <Separator className="bg-line" />
       <section className="space-y-4">
         <SectionTitle>ABOUT</SectionTitle>
         <div className="mx-auto max-w-[640px] space-y-3">
           {profile.about.map((p, i) => (
-            <p key={i} className="text-sm leading-6 text-black/75">
+            <p key={i} className="text-sm leading-6 text-ink-2">
               {p}
             </p>
           ))}
         </div>
       </section>
 
-      <Separator className="bg-black/10" />
+      <Separator className="bg-line" />
 
       {/* 経歴 */}
       <section className="space-y-4">
         <SectionTitle>EXPERIENCE</SectionTitle>
-        <div className="relative border-l-2 border-blue-100 ml-4 pl-8 space-y-7">
+        <div className="relative border-l-2 border-line ml-4 pl-8 space-y-7">
           {profile.experiences.map((ex, i) => (
             <div key={i}>
-              <span className="text-[10px] font-bold text-blue-500 tracking-widest">
+              <span className="text-[10px] font-bold text-ink-3 tracking-widest">
                 {ex.period}
               </span>
-              <p className="text-base font-bold mt-1">{ex.headline}</p>
+              <p className="text-base font-bold text-ink mt-1">{ex.headline}</p>
               {ex.detail && (
-                <p className="text-sm text-black/60 mt-2 leading-relaxed">
+                <p className="text-sm text-ink-2 mt-2 leading-relaxed">
                   {ex.detail}
                 </p>
               )}
@@ -59,7 +59,7 @@ export default function ProfilePage() {
           ))}
         </div>
       </section>
-      <Separator className="bg-black/10" />
+      <Separator className="bg-line" />
       <section className="space-y-4">
         <SectionTitle>SKILLS</SectionTitle>
 

@@ -20,7 +20,7 @@ function FooterLinks({ links }: { links: FooterLink[] }) {
             href={l.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[11px] tracking-[0.18em] text-black/60 hover:text-black"
+            className="text-[11px] tracking-[0.18em] text-ink-2 hover:text-accent"
           >
             {l.label}
           </a>
@@ -28,7 +28,7 @@ function FooterLinks({ links }: { links: FooterLink[] }) {
           <Link
             key={l.href}
             href={l.href}
-            className="text-[11px] tracking-[0.18em] text-black/60 hover:text-black"
+            className="text-[11px] tracking-[0.18em] text-ink-2 hover:text-accent"
           >
             {l.label}
           </Link>
@@ -44,13 +44,13 @@ export function Footer() {
   return (
     <footer className="mt-10">
       <div className="mx-auto max-w-[820px] px-6">
-        <Separator className="bg-black/10" />
+        <Separator className="bg-line" />
 
         <div className="mt-5">
           <FooterLinks links={socialLinks} />
         </div>
 
-        <p className="mt-6 text-center text-[11px] tracking-[0.18em] text-black/45">
+        <p className="mt-6 text-center text-[11px] tracking-[0.18em] text-ink-3">
           © {year} Mitsuki Nakamura All rights reserved.
         </p>
       </div>

@@ -24,10 +24,10 @@ function InfoBlock({
 }) {
   return (
     <div className="space-y-3">
-      <h3 className="text-[11px] font-bold tracking-[0.2em] text-blue-600/80 uppercase">
+      <h3 className="text-[11px] font-bold tracking-[0.2em] text-ink-3 uppercase">
         {title}
       </h3>
-      <div className="text-[14px] leading-relaxed text-black/70">
+      <div className="text-[14px] leading-relaxed text-ink-2">
         {children}
       </div>
     </div>
@@ -68,15 +68,15 @@ export default async function WorkDetailPage({ params }: Props) {
     <div className="mx-auto max-w-[1000px] space-y-16 pb-20 animate-in fade-in duration-700">
       {/* Header */}
       <div className="text-center space-y-4 pt-10">
-        <div className="text-[11px] font-bold tracking-[0.4em] text-blue-500 uppercase">
+        <div className="text-[11px] font-bold tracking-[0.4em] text-ink-3 uppercase">
           {work.tag}
         </div>
-        <h1 className="text-3xl font-bold tracking-tight text-black/90 md:text-4xl">
+        <h1 className="text-3xl font-bold tracking-tight text-ink md:text-4xl">
           {work.title}
         </h1>
       </div>
 
-      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl bg-blue-50/50 border border-blue-100/20 shadow-2xl shadow-blue-500/5">
+      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg bg-subtle">
         <Image
           src={work.image}
           alt={work.title}
@@ -91,10 +91,10 @@ export default async function WorkDetailPage({ params }: Props) {
         <div className="space-y-12">
           {work.overview && (
             <section className="space-y-4">
-              <h2 className="text-lg font-bold border-l-4 border-blue-500 pl-4">
+              <h2 className="text-lg font-bold text-ink border-l-4 border-ink pl-4">
                 Overview
               </h2>
-              <p className="text-[15px] leading-relaxed text-black/70 whitespace-pre-line">
+              <p className="text-[15px] leading-relaxed text-ink-2 whitespace-pre-line">
                 {work.overview}
               </p>
             </section>
@@ -102,7 +102,7 @@ export default async function WorkDetailPage({ params }: Props) {
 
           {work.gallery?.length ? (
             <section className="space-y-6">
-              <h2 className="text-lg font-bold border-l-4 border-blue-500 pl-4">
+              <h2 className="text-lg font-bold text-ink border-l-4 border-ink pl-4">
                 Gallery
               </h2>
               {work.gallery?.length ? (
@@ -112,12 +112,12 @@ export default async function WorkDetailPage({ params }: Props) {
           ) : null}
         </div>
 
-        <aside className="h-fit space-y-8 rounded-3xl bg-blue-50/40 p-8 border border-blue-100/30 backdrop-blur-sm">
+        <aside className="h-fit space-y-8 rounded-lg bg-subtle p-8">
           <InfoBlock title="Details">
             <div className="space-y-5">
               {work.period && (
                 <div>
-                  <p className="text-[10px] text-black/40 mb-1 font-bold">
+                  <p className="text-[10px] text-ink-3 mb-1 font-bold">
                     PERIOD
                   </p>
                   <p className="font-medium">{work.period}</p>
@@ -125,7 +125,7 @@ export default async function WorkDetailPage({ params }: Props) {
               )}
               {work.role && (
                 <div>
-                  <p className="text-[10px] text-black/40 mb-2 font-bold tracking-[0.1em]">
+                  <p className="text-[10px] text-ink-3 mb-2 font-bold tracking-[0.1em]">
                     ROLE
                   </p>
                   <div className="flex flex-wrap gap-1.5">
@@ -135,7 +135,7 @@ export default async function WorkDetailPage({ params }: Props) {
                       .map((r) => (
                         <span
                           key={r}
-                          className="inline-flex items-center rounded-md bg-blue-500/5 px-2 py-1 text-[11px] font-medium text-blue-600 border border-blue-500/10"
+                          className="inline-flex items-center rounded-md bg-surface px-2 py-1 text-[11px] font-medium text-ink-2 border border-line"
                         >
                           {r}
                         </span>
@@ -145,14 +145,14 @@ export default async function WorkDetailPage({ params }: Props) {
               )}
               {work.tech.length > 0 && (
                 <div>
-                  <p className="text-[10px] text-black/40 mb-1 font-bold">
+                  <p className="text-[10px] text-ink-3 mb-1 font-bold">
                     TECH STACK
                   </p>
                   <div className="flex flex-wrap gap-1.5 mt-2">
                     {work.tech.map((t) => (
                       <span
                         key={t}
-                        className="rounded-md bg-white px-2 py-1 text-[10px] font-bold tracking-wider text-blue-600 border border-blue-100"
+                        className="rounded-md bg-surface px-2 py-1 text-[10px] font-bold tracking-wider text-ink-2 border border-line"
                       >
                         {t}
                       </span>
@@ -165,7 +165,7 @@ export default async function WorkDetailPage({ params }: Props) {
 
           {work.links && work.links.length > 0 && (
             <>
-              <Separator className="bg-blue-200/20" />
+              <Separator className="bg-line" />
               <div className="space-y-3">
                 {work.links.map((l) => (
                   <a
@@ -173,7 +173,7 @@ export default async function WorkDetailPage({ params }: Props) {
                     href={l.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center justify-between rounded-xl bg-white p-3 text-xs font-bold tracking-widest text-black/70 shadow-sm transition-all hover:bg-blue-500 hover:text-white"
+                    className="group flex items-center justify-between rounded-lg border border-line bg-surface p-3 text-xs font-bold tracking-widest text-ink-2 transition-colors hover:border-accent hover:bg-accent hover:text-on-accent"
                   >
                     {l.label}
                     <ExternalLink className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -185,10 +185,10 @@ export default async function WorkDetailPage({ params }: Props) {
         </aside>
       </div>
 
-      <div className="flex justify-center pt-10 border-t border-black/5">
+      <div className="flex justify-center pt-10 border-t border-line">
         <Link
           href="/works"
-          className="group flex items-center gap-2 text-[11px] font-bold tracking-[0.3em] text-black/40 hover:text-blue-500 transition-colors"
+          className="group flex items-center gap-2 text-[11px] font-bold tracking-[0.3em] text-ink-3 hover:text-accent transition-colors"
         >
           <ArrowLeft className="h-3 w-3" />
           BACK TO WORKS

@@ -83,7 +83,7 @@ export function WorkGallery({ items }: { items: GalleryItem[] }) {
             type="button"
             aria-label={`${g.alt ?? `画像${idx + 1}`}を拡大表示`}
             onClick={() => setSelectedIndex(idx)}
-            className="group relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-blue-50/30 border border-blue-100/20 shadow-sm transition-all duration-500 hover:shadow-md cursor-zoom-in"
+            className="group relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-subtle border border-line cursor-zoom-in"
           >
             <Image
               src={g.src}
@@ -92,9 +92,9 @@ export function WorkGallery({ items }: { items: GalleryItem[] }) {
               className="object-contain p-4 transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
-            <div className="absolute inset-0 bg-blue-500/0 flex items-center justify-center opacity-0 transition-all duration-500 group-hover:bg-blue-500/5 group-hover:opacity-100">
-              <div className="bg-white/80 p-2 rounded-full shadow-lg transform translate-y-4 transition-transform duration-500 group-hover:translate-y-0">
-                <ZoomIn className="h-5 w-5 text-blue-600" />
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+              <div className="bg-surface/90 p-2 rounded-full transform translate-y-4 transition-transform duration-500 group-hover:translate-y-0">
+                <ZoomIn className="h-5 w-5 text-ink" />
               </div>
             </div>
           </button>
