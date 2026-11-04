@@ -1,19 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { formatDate, type ArticleItem } from "@/lib/articles";
 
 type WorkItem = {
   id: string;
   title: string;
   image: string;
-};
-
-type ArticleItem = {
-  id: string;
-  title: string;
-  image: string;
-  pubDate: string;
-  platformName: string;
 };
 
 type ThumbGridProps = {
@@ -93,8 +86,11 @@ export function ThumbGrid(props: ThumbGridProps) {
                   </h3>
                 </div>
                 <div className="mt-6 flex items-center justify-end border-t border-blue-500/10 pt-4">
-                  <time className="text-[11px] font-medium text-black/40 tracking-wider">
-                    {(it as ArticleItem).pubDate}
+                  <time
+                    dateTime={(it as ArticleItem).publishedAt}
+                    className="text-[11px] font-medium text-black/40 tracking-wider"
+                  >
+                    {formatDate((it as ArticleItem).publishedAt)}
                   </time>
                 </div>
               </article>
