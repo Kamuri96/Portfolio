@@ -6,6 +6,7 @@
 // - 元画像より新しい出力があれば変換をスキップする
 // - 最後に src/ 内の "/img/..." 参照がすべて存在するか確認し、なければ失敗する
 
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
@@ -68,12 +69,38 @@ console.log(
   `[images] ${sources.length} 件（変換 ${converted} / スキップ ${sources.length - converted} / 削除 ${removed}）`
 );
 
-// src 内の画像参照が実在するか確認する
+// macOS は大文字・小文字を区別しないため、ローカルでは通っても Linux（Cloudflare のビルド）で
+// 画像が見つからないことがある。Git に記録された名前とディスク上の名前が一致するか確認する
+try {
+  const tracked = execFileSync("git", ["ls-files", "-z", SRC_DIR], { encoding: "utf8" })
+    .split("\0")
+    .filter(Boolean);
+  const onDisk = new Set(walk(SRC_DIR).map((f) => f.split(path.sep).join("/")));
+  const mismatched = tracked.filter((f) => !onDisk.has(f));
+  if (mismatched.length > 0) {
+    console.error("[images] Git に記録された名前とディスク上の名前が一致しません（大文字・小文字の違いなど）:");
+    for (const f of mismatched) console.error(`  ${f}`);
+    console.error("  git mv で Git 側の名前をディスクに合わせてください（大文字・小文字だけの変更は一度別名を経由する）");
+    process.exit(1);
+  }
+} catch (e) {
+  if (e.status === undefined) {
+    // git が使えない環境ではこの確認をスキップする
+  } else {
+    throw e;
+  }
+}
+
+// src 内の画像参照が実在するか確認する（大文字・小文字も区別する）
+const generated = new Set(
+  [...expected].map((f) => "/" + path.relative("public", f).split(path.sep).join("/"))
+);
 const missing = [];
 for (const file of walk("src").filter((f) => /\.(tsx?|mdx?)$/.test(f))) {
   const text = fs.readFileSync(file, "utf8");
-  for (const [, ref] of text.matchAll(/["'`](\/img\/[^"'`]+)["'`]/g)) {
-    if (!fs.existsSync(path.join("public", ref))) missing.push(`${file}: ${ref}`);
+  // 拡張子付きのパスだけを対象にする（"/img/og/" のような接頭辞の文字列は除外）
+  for (const [, ref] of text.matchAll(/["'`](\/img\/[^"'`]+\.\w+)["'`]/g)) {
+    if (!generated.has(ref)) missing.push(`${file}: ${ref}`);
   }
 }
 if (missing.length > 0) {
