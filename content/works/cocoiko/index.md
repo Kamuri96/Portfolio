@@ -7,7 +7,7 @@ type: ハッカソン
 team: 3
 role:
   - 企画
-  - ユーザー間の共有機能の実装
+  - 実装
 tech:
   - HTML
   - CSS

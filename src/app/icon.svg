@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- kamuri のファビコン：黒い画面・シアンの四隅の枠・頭文字 k -->
+  <rect width="64" height="64" rx="10" fill="#121414"/>
+  <g fill="none" stroke="#3fe3ea" stroke-width="3" stroke-linecap="square">
+    <path d="M8 18V8h10M46 8h10v10M56 46v10H46M18 56H8V46"/>
+  </g>
+  <g fill="none" stroke="#3fe3ea" stroke-width="6.5" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M24 17v30"/>
+    <path d="M42 22L27 35l16 12"/>
+  </g>
+</svg>

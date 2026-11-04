@@ -4,7 +4,7 @@ name: 中村 美月
 title: Engineer / Designer
 about:
   - 小さい頃から絵を描いたり、物を作ることが好きです。
-  - 分野にとらわれない「ものづくり」を目標に、ゲーム制作、イラスト、Web開発、映像、3Dモデル、金属加工など様々なものづくりに興味を持ち、日々制作に取り組んでいます。
+  - 分野にとらわれない「ものづくり」を目標に、ゲーム制作、イラスト、Web開発、映像、3Dモデルなど様々なものづくりに興味を持ち、日々制作に取り組んでいます。
 experiences:
   - period: "2024.11"
     headline: Open Hack U 2024 TOKYO vol.3
@@ -28,7 +28,7 @@ skills:
   - name: Ruby
     since: "2025"
     description: Ruby on Railsでの就業型インターン経験
-  - name: Next.js / React
+  - name: TypeScript
     since: "2024"
     description: Webサイト制作
   - name: Figma
