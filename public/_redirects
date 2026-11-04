@@ -1,0 +1,9 @@
+# 旧 URL（/works/w1 など）から作品名の URL へ
+/works/w1 /works/ippai-taberu 301
+/works/w2 /works/colorful-umiushi 301
+/works/w3 /works/battm 301
+/works/w4 /works/cocoiko 301
+/works/w5 /works/madlize 301
+/works/w6 /works/angel-devil-todo 301
+/works/w7 /works/all-vtuber-plan 301
+/works/w8 /works/art-programming 301

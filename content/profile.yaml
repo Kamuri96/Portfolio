@@ -1,0 +1,42 @@
+# プロフィール・経歴・スキル。経歴やスキルは一覧の末尾に追記すればよい
+handle: kamuri
+name: 中村 美月
+title: Engineer / Designer
+about:
+  - 小さい頃から絵を描いたり、物を作ることが好きです。
+  - 分野にとらわれない「ものづくり」を目標に、ゲーム制作、イラスト、Web開発、映像、3Dモデルなど様々なものづくりに興味を持ち、日々制作に取り組んでいます。
+experiences:
+  - period: "2024.11"
+    headline: Open Hack U 2024 TOKYO vol.3
+    detail: Happy Hacking賞
+  - period: "2025.7"
+    headline: 株式会社スタンバイ 4daysサマーインターン
+    detail: 最優秀賞
+  - period: "2025.8"
+    headline: 株式会社いい生活 5daysサマーインターン
+  - period: "2025.8"
+    headline: 株式会社サイバーエージェント プロトスプリントリーグ
+  - period: "2025.9"
+    headline: Visional Internship 2025 「SOLVE」
+  - period: "2025.11"
+    headline: デザイン学会秋季大会 学生プロポジション
+    detail: 優秀賞
+skills:
+  - name: Unity
+    since: "2022"
+    description: 個人/チームでのゲーム制作、指導の経験
+  - name: Ruby
+    since: "2025"
+    description: Ruby on Railsでの就業型インターン経験
+  - name: TypeScript
+    since: "2024"
+    description: Webサイト制作
+  - name: Figma
+    since: "2024"
+    description: ワイヤー、UI設計
+  - name: Photoshop
+    since: "2023"
+    description: UI制作、ポスターデザイン、グッズデザインなど
+  - name: ClipStudioPaint
+    since: "2023"
+    description: イラスト制作、ロゴ制作、UI制作など

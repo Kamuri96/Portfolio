@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Chakra_Petch } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { bootInitScript } from "@/components/BootScreen";
+import { GridBackground } from "@/components/GridBackground";
 import {
   BASE_OPEN_GRAPH,
   ogImage,
@@ -12,13 +14,10 @@ import {
   TITLE_TEMPLATE,
 } from "@/lib/site";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// 見出し・ラベル・数字用。本文は日本語のシステムフォント（globals.css の --font-jp）
+const chakra = Chakra_Petch({
+  variable: "--font-chakra",
+  weight: ["500", "700"],
   subsets: ["latin"],
 });
 
@@ -42,10 +41,15 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ja">
+    // 起動演出の有無を描画前のスクリプトで <html data-boot> に書くため、サーバーの HTML と差が出る
+    <html lang="ja" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: bootInitScript }} />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${chakra.variable} antialiased`}
       >
+        <GridBackground />
         <a href="#main" className="skip-link">
           本文へスキップ
         </a>
@@ -53,7 +57,7 @@ export default function RootLayout({
 
         <main
           id="main"
-          className="mx-auto w-full max-w-[980px] px-4 pb-16 pt-6 sm:px-6"
+          className="mx-auto w-full max-w-[980px] px-4 sm:px-6"
         >
           {children}
         </main>

@@ -1,58 +1,40 @@
-import Link from "next/link";
-import { Separator } from "@/components/ui/separator";
+import { getProfile } from "@/lib/content";
 
-type FooterLink = { label: string; href: string; external?: boolean };
-
-const socialLinks: FooterLink[] = [
-  { label: "X", href: "https://x.com/Kamuri_96", external: true },
-  { label: "GitHub", href: "https://github.com/Kamuri96", external: true },
-  { label: "Qiita", href: "https://qiita.com/Kamuri96", external: true },
-  { label: "Zenn", href: "https://zenn.dev/kamuri96", external: true },
+const socialLinks = [
+  { label: "X", href: "https://x.com/Kamuri_96" },
+  { label: "GitHub", href: "https://github.com/Kamuri96" },
+  { label: "note", href: "https://note.com/kamuri_96" },
+  { label: "Qiita", href: "https://qiita.com/Kamuri96" },
+  { label: "Zenn", href: "https://zenn.dev/kamuri96" },
 ];
-
-function FooterLinks({ links }: { links: FooterLink[] }) {
-  return (
-    <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
-      {links.map((l) =>
-        l.external ? (
-          <a
-            key={l.href}
-            href={l.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[11px] tracking-[0.18em] text-black/60 hover:text-black"
-          >
-            {l.label}
-          </a>
-        ) : (
-          <Link
-            key={l.href}
-            href={l.href}
-            className="text-[11px] tracking-[0.18em] text-black/60 hover:text-black"
-          >
-            {l.label}
-          </Link>
-        )
-      )}
-    </div>
-  );
-}
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const profile = getProfile();
 
   return (
-    <footer className="mt-10">
-      <div className="mx-auto max-w-[820px] px-6">
-        <Separator className="bg-black/10" />
-
-        <div className="mt-5">
-          <FooterLinks links={socialLinks} />
+    <footer className="border-t border-line">
+      <div className="mx-auto flex max-w-[980px] flex-col gap-6 px-4 py-10 sm:flex-row sm:items-end sm:justify-between sm:px-6">
+        <div>
+          <p className="font-hud text-2xl font-bold text-ink">{profile.handle}</p>
+          <p className="mt-1 font-hud text-xs tracking-[0.1em] text-ink-3">
+            © {year} {profile.handle}
+          </p>
         </div>
-
-        <p className="mt-6 text-center text-[11px] tracking-[0.18em] text-black/45">
-          © {year} Mitsuki Nakamura All rights reserved.
-        </p>
+        <ul className="m-0 flex list-none flex-wrap gap-x-5 gap-y-2 p-0">
+          {socialLinks.map((l) => (
+            <li key={l.href}>
+              <a
+                href={l.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-hud text-sm text-ink-2 hover:text-accent"
+              >
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </footer>
   );
