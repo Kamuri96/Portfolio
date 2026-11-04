@@ -27,12 +27,10 @@ function useClock() {
   return now;
 }
 
-function NameBlock({ name }: { name: string }) {
+function NameBlock({ name, title }: { name: string; title: string }) {
   return (
     <>
-      <p className="font-hud text-xs tracking-[0.3em] text-accent sm:text-sm">
-        GAME / ILLUST / DEVICE / WORKSHOP
-      </p>
+      <p className="font-hud text-xs tracking-[0.3em] text-accent sm:text-sm">{title}</p>
       <h1 className="glow mt-2 font-hud text-[64px] font-bold leading-[0.9] text-white sm:text-[120px]">
         {name}
       </h1>
@@ -83,7 +81,14 @@ function ChannelButtons({
   );
 }
 
-export function ChannelHero({ name, channels }: { name: string; channels: Channel[] }) {
+type Props = {
+  name: string;
+  /** 名前の上に出す肩書き（content/profile.yaml の title） */
+  title: string;
+  channels: Channel[];
+};
+
+export function ChannelHero({ name, title, channels }: Props) {
   const [idx, setIdx] = useState(0);
   const [switching, setSwitching] = useState(false);
   const clock = useClock();
@@ -121,7 +126,7 @@ export function ChannelHero({ name, channels }: { name: string; channels: Channe
     <section className="-mx-4 sm:mx-0">
       {/* スマホ：名前 → 映像 → 切り替えボタン の順 */}
       <div className="px-4 pb-6 pt-2 sm:hidden">
-        <NameBlock name={name} />
+        <NameBlock name={name} title={title} />
       </div>
 
       {/* PC とスマホで同じ 16:9 の映像枠 */}
@@ -164,7 +169,7 @@ export function ChannelHero({ name, channels }: { name: string; channels: Channe
 
         {/* PC：名前・作品名・ボタンをすべて映像の上に */}
         <div className="absolute inset-x-8 bottom-9 hidden sm:block">
-          <NameBlock name={name} />
+          <NameBlock name={name} title={title} />
           <div className="mt-5 flex items-end justify-between gap-4">
             <NowOnAir ch={ch} />
             <ChannelButtons channels={channels} idx={idx} onSelect={go} />

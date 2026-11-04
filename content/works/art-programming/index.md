@@ -4,6 +4,7 @@ category: WORKSHOP
 date: 2025-04
 period: 2025.4 ~ 2025.8
 type: 授業
+team: 3
 role:
   - 企画
   - 実装

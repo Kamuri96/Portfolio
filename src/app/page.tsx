@@ -14,6 +14,7 @@ const TOP_ILLUSTRATIONS = 6;
 export default async function TopPage() {
   const allArticles = await getArticles();
   const works = getWorks();
+  const profile = getProfile();
   const illustrations = (await getIllustrations()).slice(0, TOP_ILLUSTRATIONS);
   const channels: Channel[] = works.slice(0, HERO_CHANNELS).map((w) => ({
     slug: w.slug,
@@ -26,7 +27,7 @@ export default async function TopPage() {
   return (
     <div className="space-y-28 pb-24 pt-2">
       <BootScreen />
-      <ChannelHero name={getProfile().handle} channels={channels} />
+      <ChannelHero name={profile.handle} title={profile.title} channels={channels} />
 
       <section className="space-y-8">
         <SectionHeading moreHref="/works">WORKS</SectionHeading>

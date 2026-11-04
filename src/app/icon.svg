@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- kamuri のファビコン：黒い画面・シアンの四隅の枠・頭文字 k -->
-  <rect width="64" height="64" rx="10" fill="#121414"/>
-  <g fill="none" stroke="#3fe3ea" stroke-width="3" stroke-linecap="square">
-    <path d="M8 18V8h10M46 8h10v10M56 46v10H46M18 56H8V46"/>
+  <!-- kamuri のファビコン：黒い画面にシアンの冠 -->
+  <rect width="64" height="64" rx="12" fill="#121414"/>
+  <g fill="#3fe3ea">
+    <path d="M12 46V24l11 10 9-17 9 17 11-10v22z"/>
+    <rect x="12" y="49" width="40" height="5" rx="1"/>
+    <circle cx="12" cy="20" r="4"/>
+    <circle cx="32" cy="13" r="4"/>
+    <circle cx="52" cy="20" r="4"/>
   </g>
-  <g fill="none" stroke="#3fe3ea" stroke-width="6.5" stroke-linecap="square" stroke-linejoin="miter">
-    <path d="M24 17v30"/>
-    <path d="M42 22L27 35l16 12"/>
-  </g>
+  <circle cx="32" cy="38" r="3.5" fill="#121414"/>
 </svg>
