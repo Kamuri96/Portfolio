@@ -42,3 +42,4 @@ next-env.d.ts
 
 # 画像（assets/img から scripts/optimize-images.mjs で生成）
 /public/img/
+/.generated/

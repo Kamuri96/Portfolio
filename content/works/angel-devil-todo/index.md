@@ -3,7 +3,8 @@ title: 天使と悪魔のTODOリスト
 category: DEVICE
 date: 2025-04
 period: 2025.4 ~ 5
-client: 授業課題・チーム制作（5人）
+type: 授業
+team: 5
 role:
   - TODOアプリの実装
   - デバイスへのタスク状態の送信

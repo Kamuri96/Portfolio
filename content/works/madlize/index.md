@@ -3,7 +3,8 @@ title: マドライズ
 category: GAME
 date: "2024-11"
 period: "2024.11"
-client: チーム制作（4人）
+type: ハッカソン
+team: 4
 role:
   - UIデザイン
   - UIアニメーション実装

@@ -61,18 +61,17 @@ export default async function WorkDetailPage({ params }: Props) {
         <h1 className="text-3xl font-bold leading-tight text-ink sm:text-5xl">{title}</h1>
       </header>
 
-      {/* メインの画像は画面の中に映す */}
-      <div className="relative -mx-4 aspect-video overflow-hidden bg-black sm:mx-0 sm:rounded-md">
+      {/* メインの画像は縦横比のまま。縦長の画像は画面の高さの 75% までに抑える */}
+      <div className="flex justify-center">
         <Image
           src={work.cover}
           alt={title}
-          fill
-          className="object-contain p-6 sm:p-12"
+          width={work.coverSize.width}
+          height={work.coverSize.height}
+          className="h-auto max-h-[75vh] w-auto max-w-full rounded-sm"
           sizes="(max-width: 980px) 100vw, 980px"
           priority
         />
-        <div className="screen-scan absolute inset-0" aria-hidden />
-        <div className="screen-corners absolute inset-3 sm:inset-5" aria-hidden />
       </div>
 
       <div className="grid gap-14 lg:grid-cols-[1fr_300px]">
@@ -106,7 +105,10 @@ export default async function WorkDetailPage({ params }: Props) {
             <InfoRow label="PERIOD">
               <span className="font-hud">{work.period}</span>
             </InfoRow>
-            <InfoRow label="TEAM">{work.client}</InfoRow>
+            <InfoRow label="TYPE">{work.type}</InfoRow>
+            {work.team && (
+              <InfoRow label="TEAM">{work.team === 1 ? "個人" : `${work.team}人チーム`}</InfoRow>
+            )}
             <InfoRow label="ROLE">{work.role.join(" / ")}</InfoRow>
             {work.tech.length > 0 && (
               <InfoRow label="TECH">

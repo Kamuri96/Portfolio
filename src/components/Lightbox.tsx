@@ -123,7 +123,6 @@ export function Lightbox({ items, index, onClose, onPrev, onNext }: Props) {
           className="object-contain p-3 animate-in fade-in zoom-in-95 duration-300 sm:p-6"
           priority
         />
-        <div className="screen-corners absolute inset-0 [--s:24px]" aria-hidden />
       </div>
 
       <div

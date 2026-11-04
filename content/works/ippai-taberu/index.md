@@ -3,7 +3,8 @@ title: いっぱい食べるキミが好き！
 category: GAME
 date: 2022-06
 period: 2022.6 ~ 2022.7
-client: 個人制作
+type: 自主制作
+team: 1
 role:
   - 企画
   - 実装

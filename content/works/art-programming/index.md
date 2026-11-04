@@ -3,7 +3,7 @@ title: やってみよう！アートプログラミング
 category: WORKSHOP
 date: 2025-04
 period: 2025.4 ~ 2025.8
-client: 授業課題
+type: 授業
 role:
   - 企画
   - 実装

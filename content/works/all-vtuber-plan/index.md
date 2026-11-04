@@ -3,7 +3,8 @@ title: 全世界VTuber計画!?
 category: GAME
 date: 2025-01
 period: "2025.1 ~ "
-client: チーム制作（5人）
+type: 自主制作
+team: 5
 role:
   - 企画
   - イラスト

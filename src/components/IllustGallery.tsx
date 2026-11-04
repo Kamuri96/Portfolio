@@ -49,7 +49,7 @@ export function IllustGallery({ items, filterable = false }: Props) {
             type="button"
             aria-label={`${it.title}を拡大表示`}
             onClick={() => lb.open(i)}
-            className="group frame-hover mb-2 block w-full cursor-zoom-in break-inside-avoid overflow-hidden bg-subtle sm:mb-3"
+            className="group mb-2 block w-full cursor-zoom-in break-inside-avoid overflow-hidden sm:mb-3"
           >
             <Image
               src={it.thumb}

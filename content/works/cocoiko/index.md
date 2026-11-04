@@ -3,7 +3,8 @@ title: Cocoiko
 category: WEB
 date: 2024-06
 period: "2024.6"
-client: チーム制作（3人）
+type: ハッカソン
+team: 3
 role:
   - 企画
   - ユーザー間の共有機能の実装

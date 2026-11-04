@@ -3,7 +3,8 @@ title: バトム！
 category: GAME
 date: 2023-07
 period: "2023.7"
-client: チーム制作（2人）
+type: ハッカソン
+team: 2
 role:
   - UIデザイン
   - イラスト

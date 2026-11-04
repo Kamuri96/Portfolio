@@ -7,6 +7,7 @@
 //                                   public/img/illustrations/thumb/bar.webp（一覧用・長辺 800px）
 // - OGP 用に public/img/og/foo/bar.jpg も生成する（WebP 非対応の SNS があるため。src/lib/site.ts の ogImage）
 // - 元画像より新しい出力があれば変換をスキップする
+// - 生成した画像の縦横の大きさを .generated/image-sizes.json に書き出す（ページ側で縦横比どおりに並べるため）
 // - 最後に src/ 内の "/img/..." 参照がすべて存在するか確認し、なければ失敗する
 
 import { execFileSync } from "node:child_process";
@@ -23,6 +24,7 @@ const ROOTS = [
 const OUT_DIR = "public/img";
 const OG_DIR = path.join(OUT_DIR, "og");
 const OG_MAX_SIZE = 1200;
+const SIZES_FILE = ".generated/image-sizes.json";
 const QUALITY = 80;
 const SOURCE_EXT = /\.(png|jpe?g|gif|webp)$/i;
 
@@ -81,6 +83,15 @@ for (const out of walk(OUT_DIR)) {
     removed++;
   }
 }
+
+// 配信用 WebP（OGP 用を除く）の大きさを記録する。キーはコードから参照する URL（/img/...）
+const sizes = {};
+for (const out of [...expected].filter((f) => f.endsWith(".webp")).sort()) {
+  const { width, height } = await sharp(out).metadata();
+  sizes["/" + path.relative("public", out).split(path.sep).join("/")] = [width, height];
+}
+fs.mkdirSync(path.dirname(SIZES_FILE), { recursive: true });
+fs.writeFileSync(SIZES_FILE, JSON.stringify(sizes, null, 1) + "\n");
 
 console.log(
   `[images] ${sources.length} 件（変換 ${converted} / スキップ ${sources.length - converted} / 削除 ${removed}）`

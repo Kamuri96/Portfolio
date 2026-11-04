@@ -3,7 +3,8 @@ title: Colorful Umiushi!
 category: GAME
 date: 2023-02
 period: 2023.2 ~ 2023.3
-client: 個人制作
+type: 自主制作
+team: 1
 role:
   - 企画
   - 実装

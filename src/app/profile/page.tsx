@@ -16,10 +16,8 @@ export default function ProfilePage() {
       <section className="space-y-10">
         <SectionHeading as="h1">PROFILE</SectionHeading>
         <div className="grid gap-8 sm:grid-cols-[160px_1fr] sm:items-start">
-          <div className="relative aspect-square w-40 overflow-hidden bg-black">
+          <div className="relative aspect-square w-40 overflow-hidden rounded-sm">
             <Image src="/img/icon.webp" alt={`${profile.handle} のアイコン`} fill className="object-cover" sizes="160px" priority />
-            <div className="screen-scan absolute inset-0" aria-hidden />
-            <div className="screen-corners absolute inset-2 [--s:16px]" aria-hidden />
           </div>
           <div className="space-y-5">
             <div>

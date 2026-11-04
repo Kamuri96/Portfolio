@@ -26,8 +26,10 @@ const WorkFrontmatter = z
     date: yearMonth,
     /** 表示用の期間（例：2025.4 ~ 5） */
     period: z.string().min(1),
-    /** 個人制作・授業課題など */
-    client: z.string().min(1),
+    /** 制作の種類 */
+    type: z.enum(["自主制作", "授業", "ハッカソン", "インターン"]),
+    /** チームの人数（1 なら個人）。分からなければ省略 */
+    team: z.number().int().min(1).optional(),
     role: z.array(z.string().min(1)).min(1),
     tech: z.array(z.string().min(1)).default([]),
     /** 一覧やヒーローに使う画像（同じフォルダ内のファイル名） */
@@ -77,20 +79,40 @@ export type Work = {
   date: string;
   year: string;
   period: string;
-  client: string;
+  type: string;
+  team?: number;
   role: string[];
   tech: string[];
   links: { label: string; href: string }[];
   /** 配信用の画像 URL（/img/works/<slug>/xxx.webp） */
   cover: string;
-  gallery: { src: string; alt: string }[];
+  coverSize: ImageSize;
+  gallery: ({ src: string; alt: string } & ImageSize)[];
   /** 本文。段落ごとに、行の配列 */
   body: string[][];
 };
 
 export type Profile = z.infer<typeof ProfileSchema>;
 
+export type ImageSize = { width: number; height: number };
+
 // ---------- 読み込み ----------
+
+// scripts/optimize-images.mjs が書き出す、配信用画像の大きさ
+const SIZES_FILE = path.join(process.cwd(), ".generated/image-sizes.json");
+let sizesCache: Record<string, [number, number]> | null = null;
+
+function sizeOf(url: string): ImageSize {
+  if (!sizesCache) {
+    if (!fs.existsSync(SIZES_FILE)) {
+      throw new Error("[content] .generated/image-sizes.json がありません。先に npm run images を実行してください");
+    }
+    sizesCache = JSON.parse(fs.readFileSync(SIZES_FILE, "utf8"));
+  }
+  const s = sizesCache![url];
+  if (!s) throw new Error(`[content] ${url} の大きさが分かりません。npm run images を実行し直してください`);
+  return { width: s[0], height: s[1] };
+}
 
 class ContentError extends Error {
   constructor(file: string, message: string) {
@@ -134,6 +156,7 @@ function loadWork(slug: string): Work {
   const { front, body } = splitFrontmatter(fs.readFileSync(file, "utf8"), file);
   const data = parseOrThrow(WorkFrontmatter, front, file);
   const files = fs.readdirSync(dir);
+  const cover = imageUrl(slug, data.cover, files, file);
   return {
     slug,
     title: data.title,
@@ -141,12 +164,17 @@ function loadWork(slug: string): Work {
     date: data.date,
     year: data.date.slice(0, 4),
     period: data.period,
-    client: data.client,
+    type: data.type,
+    team: data.team,
     role: data.role,
     tech: data.tech,
     links: data.links,
-    cover: imageUrl(slug, data.cover, files, file),
-    gallery: data.gallery.map((g) => ({ src: imageUrl(slug, g.src, files, file), alt: g.alt })),
+    cover,
+    coverSize: sizeOf(cover),
+    gallery: data.gallery.map((g) => {
+      const src = imageUrl(slug, g.src, files, file);
+      return { src, alt: g.alt, ...sizeOf(src) };
+    }),
     body: parseBody(body),
   };
 }
@@ -208,10 +236,7 @@ export type Illustration = {
   src: string;
   /** 一覧用（長辺 800px まで） */
   thumb: string;
-  /** 縦横比を保って並べるための元画像の大きさ */
-  width: number;
-  height: number;
-};
+} & ImageSize;
 
 let illustCache: Illustration[] | null = null;
 
@@ -222,36 +247,29 @@ export async function getIllustrations(): Promise<Illustration[]> {
   if (!fs.existsSync(listFile)) return (illustCache = []);
   const items = parseOrThrow(IllustrationSchema, parseYaml(fs.readFileSync(listFile, "utf8")) ?? [], listFile);
   const files = fs.readdirSync(ILLUST_DIR);
-  // sharp はビルド時だけ使う（devDependencies）
-  const { default: sharp } = await import("sharp");
 
-  illustCache = await Promise.all(
-    items.map(async (item) => {
-      if (!files.includes(item.file)) {
-        throw new ContentError(listFile, `画像「${item.file}」が content/illustrations にありません（大文字・小文字も区別します）`);
-      }
-      const work = item.work ? getWork(item.work) : undefined;
-      if (item.work && !work) {
-        throw new ContentError(listFile, `「${item.title}」の work: ${item.work} に当たる作品がありません（content/works のフォルダ名を書いてください）`);
-      }
-      const meta = await sharp(path.join(ILLUST_DIR, item.file)).metadata();
-      // EXIF で 90° 回転している写真は縦横を入れ替える
-      const rotated = (meta.orientation ?? 1) >= 5;
-      const name = item.file.replace(/\.(png|jpe?g|gif|webp)$/i, "");
-      return {
-        title: item.title,
-        year: item.year,
-        category: item.category,
-        tools: item.tools,
-        description: item.description,
-        work: work && { slug: work.slug, title: work.title },
-        src: `/img/illustrations/${name}.webp`,
-        thumb: `/img/illustrations/thumb/${name}.webp`,
-        width: (rotated ? meta.height : meta.width) ?? 1,
-        height: (rotated ? meta.width : meta.height) ?? 1,
-      };
-    })
-  );
+  illustCache = items.map((item) => {
+    if (!files.includes(item.file)) {
+      throw new ContentError(listFile, `画像「${item.file}」が content/illustrations にありません（大文字・小文字も区別します）`);
+    }
+    const work = item.work ? getWork(item.work) : undefined;
+    if (item.work && !work) {
+      throw new ContentError(listFile, `「${item.title}」の work: ${item.work} に当たる作品がありません（content/works のフォルダ名を書いてください）`);
+    }
+    const name = item.file.replace(/\.(png|jpe?g|gif|webp)$/i, "");
+    const src = `/img/illustrations/${name}.webp`;
+    return {
+      title: item.title,
+      year: item.year,
+      category: item.category,
+      tools: item.tools,
+      description: item.description,
+      work: work && { slug: work.slug, title: work.title },
+      src,
+      thumb: `/img/illustrations/thumb/${name}.webp`,
+      ...sizeOf(src),
+    };
+  });
   return illustCache;
 }
 

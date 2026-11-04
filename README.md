@@ -40,7 +40,8 @@ title: 作品名
 category: GAME          # GAME / WEB / DEVICE / WORKSHOP
 date: 2025-04           # 並び順に使う開始年月（「2025」だけでも可）
 period: 2025.4 ~ 5      # 表示用の期間
-client: 個人制作
+type: 自主制作          # 自主制作 / 授業 / ハッカソン / インターン
+team: 1                # チームの人数（1 なら個人。分からなければ省略）
 role: [企画, 実装]
 tech: [Unity, C#]
 cover: cover.png        # 一覧やトップに使う画像（同じフォルダのファイル名）
