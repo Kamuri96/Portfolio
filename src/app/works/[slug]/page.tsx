@@ -106,6 +106,7 @@ export default async function WorkDetailPage({ params }: Props) {
             <InfoRow label="PERIOD">
               <span className="font-hud">{work.period}</span>
             </InfoRow>
+            <InfoRow label="TEAM">{work.client}</InfoRow>
             <InfoRow label="ROLE">{work.role.join(" / ")}</InfoRow>
             {work.tech.length > 0 && (
               <InfoRow label="TECH">
