@@ -126,12 +126,6 @@
   }
 }
 
-@layer components {
-  .glass-effect {
-    @apply backdrop-blur-md bg-white/40 border border-white/20 shadow-sm;
-  }
-}
-
 .skip-link {
   position: absolute;
   top: 0;

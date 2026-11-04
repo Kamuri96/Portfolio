@@ -3,14 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "export",
   images: {
+    // 静的書き出しでは画像最適化サーバーが使えないため
     unoptimized: true,
-    remotePatterns: [
-      { protocol: "https", hostname: "cdn.qiita.com" },
-      { protocol: "https", hostname: "zenn.dev" },
-      { protocol: "https", hostname: "assets.st-note.com" },
-      { protocol: "https", hostname: "qiita-user-contents.imgix.net" },
-      { protocol: "https", hostname: "res.cloudinary.com" },
-    ],
   },
   devIndicators: false,
 };
