@@ -88,7 +88,7 @@ export const works: WorkItem[] = [
     role: "企画 / アニメーション実装 / UIデザイン",
     overview:
       "技育CAMPハッカソンで制作した作品です。\n 学生が実験のように手を動かしながら、ゲーム感覚で化学を勉強できるゲームというコンセプトで制作しました。\n マッチング時やリザルト表示にアニメーションをつけたり、分子のオブジェクトをふわふわ動かしたりなど、常に画面に飽きのこないデザインを心がけました。",
-    tech: ["Unity", "C#", "PhotoShop", "ClipStudioPaint"],
+    tech: ["Unity", "C#", "Photoshop", "ClipStudioPaint"],
     links: [
       {
         label: "Unityroom",
@@ -111,8 +111,8 @@ export const works: WorkItem[] = [
     client: "個人制作",
     role: "企画 / 実装",
     overview:
-      "技育CAMPハッカソンで制作した作品です。\n 全員がWebアプリケーション初心者の中、普段自分たちが出かける際の悩みを解決するアプリケーションを制作しました。\n 行きたいところ選びから日程調整まで一つのアプリで簡潔する便利さと、思わず使いたくなる可愛らしいデザインを心がけました。",
-    tech: ["HTML", "CSS", "JavaScript", "React", "FireBase"],
+      "技育CAMPハッカソンで制作した作品です。\n 全員がWebアプリケーション初心者の中、普段自分たちが出かける際の悩みを解決するアプリケーションを制作しました。\n 行きたいところ選びから日程調整まで一つのアプリで完結する便利さと、思わず使いたくなる可愛らしいデザインを心がけました。",
+    tech: ["HTML", "CSS", "JavaScript", "React", "Firebase"],
     gallery: [
       { src: "/img/cocoiko/cocoiko1.png", alt: "Topページ" },
       {
@@ -179,7 +179,7 @@ export const works: WorkItem[] = [
     role: "企画 / UIデザイン / イラスト / グッズ制作",
     overview:
       "東京ゲームダンジョンに継続的に出展している作品です。\n VTuberの女の子と共にさまざまなミニゲームをクリアし、一緒に世界を救おう!という世界観のゲームです。\n 出展に伴い、ゲーム開発だけでなくSNSでの広報やグッズ制作などにも注力しています。",
-    tech: ["Unity", "C#", "PhotoShop", "ClipStudioPaint"],
+    tech: ["Unity", "C#", "Photoshop", "ClipStudioPaint"],
     links: [
       { label: "X", href: "https://x.com/technya_studio" },
       {
@@ -228,8 +228,8 @@ export const profile: Profile = {
   title: "Engineer / Designer",
   bio: "かわいいと遊びの体験を追求するクリエイター",
   about: [
-    "小さい頃から絵を描いたり、物を作ることがで好きです。",
-    "分野にとらわれない「ものづくり」にを目標に、ゲーム制作、イラスト、Web開発、映像、3Dモデル、金属加工など様々なものづくりに興味を持ち、日々制作に取り組んでいます。",
+    "小さい頃から絵を描いたり、物を作ることが好きです。",
+    "分野にとらわれない「ものづくり」を目標に、ゲーム制作、イラスト、Web開発、映像、3Dモデル、金属加工など様々なものづくりに興味を持ち、日々制作に取り組んでいます。",
   ],
   experiences: [
     {
