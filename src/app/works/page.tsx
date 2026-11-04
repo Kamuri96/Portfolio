@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
-import { SectionTitle } from "@/components/ui/section-title";
 import { works, type WorkItem } from "@/lib/data";
-import { ThumbGrid } from "@/components/ui/work-grid";
+import { CATEGORY_LABEL } from "@/lib/work-meta";
+import { SectionHeading } from "@/components/SectionHeading";
+import { WorkGrid } from "@/components/WorkCard";
 
 const orderedWorks = [...works].reverse();
 
@@ -19,14 +20,10 @@ export default function WorksPage() {
   }, [tag]);
 
   return (
-    <div className="space-y-6">
-      <SectionTitle className="mt-8">WORKS</SectionTitle>
+    <div className="space-y-8 pb-24 pt-10">
+      <SectionHeading as="h1">WORKS</SectionHeading>
 
-      <div
-        role="group"
-        aria-label="カテゴリで絞り込む"
-        className="flex justify-center gap-8 border-b border-line pb-4 mb-12"
-      >
+      <div role="group" aria-label="種類で絞り込む" className="flex flex-wrap gap-2">
         {filters.map((t) => (
           <button
             key={t}
@@ -34,27 +31,18 @@ export default function WorksPage() {
             aria-pressed={tag === t}
             onClick={() => setTag(t)}
             className={cn(
-              "text-[10px] tracking-[0.2em] transition-all duration-300 relative py-2",
+              "h-8 border px-3 font-hud text-xs tracking-[0.08em] transition-colors",
               tag === t
-                ? "text-accent font-bold"
-                : "text-ink-3 hover:text-ink"
+                ? "border-accent bg-accent text-on-accent"
+                : "border-line text-ink-2 hover:border-accent hover:text-accent"
             )}
           >
-            {t}
-            {tag === t && (
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent animate-in fade-in zoom-in duration-300" />
-            )}
+            {CATEGORY_LABEL[t]}
           </button>
         ))}
       </div>
-      <div className="mx-auto max-w-[900px]">
-        <ThumbGrid
-          key={tag}
-          items={filtered}
-          hrefPrefix="/works"
-          type="works"
-        />
-      </div>
+
+      <WorkGrid works={filtered} />
     </div>
   );
 }

@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { ArticleItem } from "@/lib/articles";
-import { ThumbGrid } from "@/components/ui/work-grid";
+import { formatDate, type ArticleItem } from "@/lib/articles";
 
 type Props = {
   /** ビルド時に取得した記事。API が使えないときはこれを表示し続ける */
@@ -29,12 +28,29 @@ export function ArticleList({ initialArticles, limit }: Props) {
   const items = limit ? articles.slice(0, limit) : articles;
 
   if (items.length === 0) {
-    return (
-      <p className="text-center text-ink-3 py-10">
-        記事が見つかりませんでした。
-      </p>
-    );
+    return <p className="py-10 text-center text-ink-3">記事が見つかりませんでした。</p>;
   }
 
-  return <ThumbGrid items={items} hrefPrefix="/articles" type="articles" />;
+  return (
+    <ul>
+      {items.map((a) => (
+        <li key={a.id} className="border-b border-line">
+          <a
+            href={a.id}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group grid grid-cols-[6.5rem_1fr] gap-x-4 gap-y-1 py-4 sm:grid-cols-[7.5rem_4.5rem_1fr]"
+          >
+            <time dateTime={a.publishedAt} className="font-hud text-sm tabular-nums text-ink-3">
+              {formatDate(a.publishedAt)}
+            </time>
+            <span className="hidden font-hud text-xs leading-6 text-accent sm:block">
+              {a.platformName.toUpperCase()}
+            </span>
+            <span className="text-[15px] text-ink group-hover:text-accent">{a.title}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
 }

@@ -2,25 +2,24 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Header = () => {
   const pathname = usePathname();
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-bg/80 border-b border-line">
-      <div className="mx-auto flex max-w-[900px] items-center justify-between gap-4 px-4 sm:px-8 h-16">
+      <div className="mx-auto flex max-w-[980px] items-center justify-between gap-4 px-4 sm:px-6 h-16">
         <Link
           href="/"
-          className="text-[13px] font-bold tracking-[0.3em] text-ink hover:opacity-70 transition-opacity"
+          className="font-hud text-xl font-bold text-ink hover:text-accent transition-colors"
         >
-          PORTFOLIO
+          kamuri
         </Link>
-        <div className="flex items-center gap-4 sm:gap-8">
-          <nav className="flex gap-4 sm:gap-8 text-[10px] tracking-[0.2em] font-medium text-ink-3">
+        <div className="flex items-center">
+          <nav className="flex gap-5 sm:gap-8 font-hud text-sm tracking-[0.04em] text-ink-2">
             {[
-              { href: "/profile", label: "PROFILE" },
-              { href: "/works", label: "WORKS" },
-              { href: "/articles", label: "ARTICLES" },
+              { href: "/works", label: "Works" },
+              { href: "/profile", label: "Profile" },
+              { href: "/articles", label: "Articles" },
             ].map((item) => (
               <Link
                 key={item.href}
@@ -35,7 +34,6 @@ export const Header = () => {
               </Link>
             ))}
           </nav>
-          <ThemeToggle />
         </div>
       </div>
     </header>

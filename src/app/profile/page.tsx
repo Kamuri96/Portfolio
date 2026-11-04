@@ -1,73 +1,69 @@
-import { profile } from "@/lib/data";
-import { SectionTitle } from "@/components/ui/section-title";
-import { skillItems } from "@/lib/data";
-import { Separator } from "@/components/ui/separator";
-import { SkillCard } from "@/components/ui/skill-card";
+import Image from "next/image";
+import { profile, skillItems } from "@/lib/data";
+import { SectionHeading } from "@/components/SectionHeading";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Profile",
-  description: `${profile.name}のプロフィール・経歴・スキル。`,
+  description: `${profile.handle}（${profile.name}）のプロフィール・経歴・スキル。`,
 };
 
 export default function ProfilePage() {
   return (
-    <div className="space-y-10">
-      <div className="text-center">
-        <SectionTitle className="mt-8">PROFILE</SectionTitle>
-        <h1 className="mt-4 text-lg font-medium text-ink">
-          {profile.name}
-        </h1>
-        <p className="mt-1 text-xs tracking-[0.18em] text-ink-3">
-          {profile.title}
-        </p>
-        <p className="mx-auto mt-4 max-w-[560px] text-sm leading-6 text-ink-2">
-          {profile.bio}
-        </p>
-      </div>
-
-      <Separator className="bg-line" />
-      <section className="space-y-4">
-        <SectionTitle>ABOUT</SectionTitle>
-        <div className="mx-auto max-w-[640px] space-y-3">
-          {profile.about.map((p, i) => (
-            <p key={i} className="text-sm leading-6 text-ink-2">
-              {p}
-            </p>
-          ))}
+    <div className="space-y-20 pb-24 pt-10">
+      <section className="space-y-10">
+        <SectionHeading as="h1">PROFILE</SectionHeading>
+        <div className="grid gap-8 sm:grid-cols-[160px_1fr] sm:items-start">
+          <div className="relative aspect-square w-40 overflow-hidden bg-black">
+            <Image src="/img/icon.webp" alt={`${profile.handle} のアイコン`} fill className="object-cover" sizes="160px" priority />
+            <div className="screen-scan absolute inset-0" aria-hidden />
+            <div className="screen-corners absolute inset-2 [--s:16px]" aria-hidden />
+          </div>
+          <div className="space-y-5">
+            <div>
+              <p className="glow font-hud text-5xl font-bold text-ink">{profile.handle}</p>
+              <p className="mt-2 text-sm text-ink-2">
+                {profile.name}
+                <span className="ml-3 font-hud text-xs tracking-[0.1em] text-ink-3">{profile.title}</span>
+              </p>
+            </div>
+            <div className="max-w-[36em] space-y-3">
+              {profile.about.map((p, i) => (
+                <p key={i} className="text-[15px] leading-8 text-ink-2">
+                  {p}
+                </p>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      <Separator className="bg-line" />
-
-      {/* 経歴 */}
       <section className="space-y-4">
-        <SectionTitle>EXPERIENCE</SectionTitle>
-        <div className="relative border-l-2 border-line ml-4 pl-8 space-y-7">
+        <SectionHeading>EXPERIENCE</SectionHeading>
+        <ol className="m-0 list-none p-0">
           {profile.experiences.map((ex, i) => (
-            <div key={i}>
-              <span className="text-[10px] font-bold text-ink-3 tracking-widest">
-                {ex.period}
-              </span>
-              <p className="text-base font-bold text-ink mt-1">{ex.headline}</p>
+            <li key={i} className="grid grid-cols-[5.5rem_1fr] gap-4 border-b border-line py-4 sm:grid-cols-[7rem_1fr_auto]">
+              <span className="font-hud text-sm tabular-nums text-ink-3">{ex.period}</span>
+              <span className="text-[15px] text-ink">{ex.headline}</span>
               {ex.detail && (
-                <p className="text-sm text-ink-2 mt-2 leading-relaxed">
-                  {ex.detail}
-                </p>
+                <span className="col-start-2 text-sm text-accent sm:col-start-auto">{ex.detail}</span>
               )}
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="space-y-4">
+        <SectionHeading>SKILLS</SectionHeading>
+        <dl className="m-0">
+          {skillItems.map((s) => (
+            <div key={s.name} className="grid grid-cols-[1fr_auto] gap-x-4 gap-y-1 border-b border-line py-4 sm:grid-cols-[12rem_5rem_1fr]">
+              <dt className="font-hud text-[15px] font-bold text-ink">{s.name}</dt>
+              <dd className="m-0 font-hud text-sm text-ink-3 sm:order-none">{s.experience}</dd>
+              <dd className="col-span-2 m-0 text-sm text-ink-2 sm:col-span-1">{s.description}</dd>
             </div>
           ))}
-        </div>
-      </section>
-      <Separator className="bg-line" />
-      <section className="space-y-4">
-        <SectionTitle>SKILLS</SectionTitle>
-
-        <div className="mx-auto grid max-w-[920px] grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {skillItems.map((s) => (
-            <SkillCard key={s.name} item={s} />
-          ))}
-        </div>
+        </dl>
       </section>
     </div>
   );

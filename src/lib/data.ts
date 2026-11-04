@@ -15,6 +15,9 @@ export type WorkItem = {
 };
 
 export type Profile = {
+  /** サイト上の名前（活動名） */
+  handle: string;
+  /** 本名。プロフィールにだけ表示する */
   name: string;
   title: string;
   bio: string;
@@ -224,6 +227,7 @@ export const works: WorkItem[] = [
 ];
 
 export const profile: Profile = {
+  handle: "kamuri",
   name: "中村 美月",
   title: "Engineer / Designer",
   bio: "かわいいと遊びの体験を追求するクリエイター",

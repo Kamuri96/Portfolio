@@ -83,7 +83,7 @@ export function WorkGallery({ items }: { items: GalleryItem[] }) {
             type="button"
             aria-label={`${g.alt ?? `画像${idx + 1}`}を拡大表示`}
             onClick={() => setSelectedIndex(idx)}
-            className="group relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-subtle border border-line cursor-zoom-in"
+            className="group frame-hover relative aspect-[4/3] w-full overflow-hidden rounded-sm bg-subtle cursor-zoom-in"
           >
             <Image
               src={g.src}
