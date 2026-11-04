@@ -1,9 +1,11 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "portfolio",
+  "main": "worker/index.ts",
   "compatibility_date": "2025-09-27",
   "assets": {
-    "directory": "./out"
+    "directory": "./out",
+    "binding": "ASSETS"
   },
   "observability": {
     "enabled": true

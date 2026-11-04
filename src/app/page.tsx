@@ -4,15 +4,13 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { SectionTitle } from "@/components/ui/section-title";
 import { works } from "@/lib/data";
 import { ThumbGrid } from "@/components/ui/work-grid";
-import { getArticles } from "@/lib/rss";
+import { getArticles } from "@/lib/articles";
 import { HeroSlider } from "@/components/ui/HeroSlider";
-
-export const revalidate = 86400;
+import { ArticleList } from "@/components/ArticleList";
 
 export default async function TopPage() {
   const latestWorks = works.slice(-3).reverse();
   const allArticles = await getArticles();
-  const latestArticles = allArticles.slice(0, 3);
   const heroImages = latestWorks.map((w) => w.image);
 
   return (
@@ -105,11 +103,7 @@ export default async function TopPage() {
         <div className="flex items-baseline justify-between border-b border-black/5 pb-4">
           <SectionTitle>ARTICLES</SectionTitle>
         </div>
-        <ThumbGrid
-          items={latestArticles}
-          hrefPrefix="/articles"
-          type="articles"
-        />
+        <ArticleList initialArticles={allArticles} limit={3} />
         <div className="flex justify-center pt-4">
           <Link
             href="/articles"

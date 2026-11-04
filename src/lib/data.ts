@@ -14,14 +14,6 @@ export type WorkItem = {
   gallery?: { src: string; alt?: string }[];
 };
 
-export type ArticleItem = {
-  id: string;
-  title: string;
-  image: string;
-  pubDate: string;
-  platform: "Qiita" | "Zenn" | "note";
-};
-
 export type Profile = {
   name: string;
   title: string;
