@@ -3,38 +3,46 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-export function HeroSlider({ images }: { images: string[] }) {
+type Slide = { src: string; alt: string };
+
+export function HeroSlider({ slides }: { slides: Slide[] }) {
   const [currentIdx, setCurrentIdx] = useState(0);
 
   useEffect(() => {
-    if (images.length <= 1) return;
+    if (slides.length <= 1) return;
+    // 動きを減らす設定のときは自動で切り替えない
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = setInterval(() => {
-      setCurrentIdx((prev) => (prev + 1) % images.length);
+      setCurrentIdx((prev) => (prev + 1) % slides.length);
     }, 4000);
     return () => clearInterval(timer);
-  }, [images.length]);
+  }, [slides.length]);
 
   return (
     <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl shadow-2xl bg-black/5 animate-in fade-in duration-1000">
-      {images.map((src, idx) => (
+      {slides.map((slide, idx) => (
         <div
-          key={src}
+          key={slide.src}
+          aria-hidden={idx !== currentIdx}
           className={cn(
             "absolute inset-0 transition-opacity duration-1000 ease-in-out",
             idx === currentIdx ? "opacity-100 z-10" : "opacity-0 z-0"
           )}
         >
           <Image
-            src={src}
-            alt="Selected work"
+            src={slide.src}
+            alt={slide.alt}
             fill
             className="object-cover"
             priority={idx === 0}
           />
         </div>
       ))}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-        {images.map((_, idx) => (
+      <div
+        aria-hidden
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2"
+      >
+        {slides.map((_, idx) => (
           <div
             key={idx}
             className={cn(

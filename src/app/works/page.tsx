@@ -22,10 +22,16 @@ export default function WorksPage() {
     <div className="space-y-6">
       <SectionTitle className="mt-8">WORKS</SectionTitle>
 
-      <div className="flex justify-center gap-8 border-b border-black/5 pb-4 mb-12">
+      <div
+        role="group"
+        aria-label="カテゴリで絞り込む"
+        className="flex justify-center gap-8 border-b border-black/5 pb-4 mb-12"
+      >
         {filters.map((t) => (
           <button
             key={t}
+            type="button"
+            aria-pressed={tag === t}
             onClick={() => setTag(t)}
             className={cn(
               "text-[10px] tracking-[0.2em] transition-all duration-300 relative py-2",

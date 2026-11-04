@@ -7,14 +7,14 @@ export const Header = () => {
   const pathname = usePathname();
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-white/60 border-b border-black/[0.03]">
-      <div className="mx-auto flex max-w-[900px] items-center justify-between px-8 h-16">
+      <div className="mx-auto flex max-w-[900px] items-center justify-between gap-4 px-4 sm:px-8 h-16">
         <Link
           href="/"
           className="text-[13px] font-bold tracking-[0.3em] hover:opacity-70 transition-opacity"
         >
           PORTFOLIO
         </Link>
-        <nav className="flex gap-8 text-[10px] tracking-[0.2em] font-medium text-black/50">
+        <nav className="flex gap-5 sm:gap-8 text-[10px] tracking-[0.2em] font-medium text-black/50">
           {[
             { href: "/profile", label: "PROFILE" },
             { href: "/works", label: "WORKS" },

@@ -138,7 +138,7 @@ export default async function WorkDetailPage({ params }: Props) {
                   </div>
                 </div>
               )}
-              {work.tech?.length && (
+              {work.tech.length > 0 && (
                 <div>
                   <p className="text-[10px] text-black/40 mb-1 font-bold">
                     TECH STACK
@@ -158,7 +158,7 @@ export default async function WorkDetailPage({ params }: Props) {
             </div>
           </InfoBlock>
 
-          {work.links?.length && (
+          {work.links && work.links.length > 0 && (
             <>
               <Separator className="bg-blue-200/20" />
               <div className="space-y-3">
