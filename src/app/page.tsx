@@ -7,18 +7,22 @@ import { ThumbGrid } from "@/components/ui/work-grid";
 import { getArticles } from "@/lib/articles";
 import { HeroSlider } from "@/components/ui/HeroSlider";
 import { ArticleList } from "@/components/ArticleList";
+import { toPlainText } from "@/lib/site";
 
 export default async function TopPage() {
   const latestWorks = works.slice(-3).reverse();
   const allArticles = await getArticles();
-  const heroImages = latestWorks.map((w) => w.image);
+  const heroSlides = latestWorks.map((w) => ({
+    src: w.image,
+    alt: toPlainText(w.title),
+  }));
 
   return (
     <div className="space-y-24 pb-20">
       {/* Hero Section */}
       <section className="relative pt-10">
         <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-center">
-          <HeroSlider images={heroImages} />
+          <HeroSlider slides={heroSlides} />
           <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-right-4 duration-1000">
             <div>
               <p className="text-[12px] font-bold tracking-[0.4em] text-blue-500/80 uppercase">
@@ -58,7 +62,7 @@ export default async function TopPage() {
           <div className="relative">
             <div className="absolute inset-0 rounded-full" />
             <Avatar className="h-24 w-24 border-2 border-white shadow-lg">
-              <AvatarImage src="/img/icon.png" alt="プロフィール画像" />
+              <AvatarImage src="/img/icon.webp" alt="プロフィール画像" />
             </Avatar>
           </div>
           <div className="space-y-2">

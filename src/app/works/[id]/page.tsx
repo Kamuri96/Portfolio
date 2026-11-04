@@ -5,6 +5,8 @@ import { works } from "@/lib/data";
 import { WorkGallery } from "@/components/ui/WorkGallery";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink, ArrowLeft } from "lucide-react";
+import type { Metadata } from "next";
+import { BASE_OPEN_GRAPH, ogImage, toPlainText } from "@/lib/site";
 
 type Params = { id: string };
 type Props = { params: Params | Promise<Params> };
@@ -36,6 +38,25 @@ export async function generateStaticParams() {
   return works.map((work) => ({
     id: work.id,
   }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolved = await resolveParams(params);
+  const work = works.find((w) => w.id === resolved.id);
+  if (!work) return {};
+  const title = toPlainText(work.title);
+  const description = toPlainText(work.overview);
+  return {
+    title,
+    description,
+    openGraph: {
+      ...BASE_OPEN_GRAPH,
+      title,
+      description,
+      images: [ogImage(work.image)],
+    },
+    twitter: { card: "summary_large_image" },
+  };
 }
 
 export default async function WorkDetailPage({ params }: Props) {
@@ -122,7 +143,7 @@ export default async function WorkDetailPage({ params }: Props) {
                   </div>
                 </div>
               )}
-              {work.tech?.length && (
+              {work.tech.length > 0 && (
                 <div>
                   <p className="text-[10px] text-black/40 mb-1 font-bold">
                     TECH STACK
@@ -142,7 +163,7 @@ export default async function WorkDetailPage({ params }: Props) {
             </div>
           </InfoBlock>
 
-          {work.links?.length && (
+          {work.links && work.links.length > 0 && (
             <>
               <Separator className="bg-blue-200/20" />
               <div className="space-y-3">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { X, ZoomIn, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -31,18 +31,48 @@ export function WorkGallery({ items }: { items: GalleryItem[] }) {
     [items.length]
   );
 
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const isOpen = selectedIndex !== null;
+
+  // 開いている間は背景のスクロールを止め、閉じたら開く前の要素にフォーカスを戻す
   useEffect(() => {
-    if (selectedIndex === null) return;
+    if (!isOpen) return;
+    const opener = document.activeElement as HTMLElement | null;
+    const { overflow } = document.body.style;
+    document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
+    return () => {
+      document.body.style.overflow = overflow;
+      opener?.focus();
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") showPrev();
       if (e.key === "ArrowRight") showNext();
       if (e.key === "Escape") setSelectedIndex(null);
+      if (e.key === "Tab") {
+        // フォーカスをダイアログ内のボタンに閉じ込める
+        const buttons = Array.from(
+          dialogRef.current?.querySelectorAll("button") ?? []
+        );
+        if (buttons.length === 0) return;
+        const index = buttons.indexOf(document.activeElement as HTMLButtonElement);
+        const next = e.shiftKey
+          ? index <= 0 ? buttons.length - 1 : index - 1
+          : index === buttons.length - 1 ? 0 : index + 1;
+        e.preventDefault();
+        buttons[next].focus();
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedIndex, showNext, showPrev]);
+  }, [isOpen, showNext, showPrev]);
 
   return (
     <section className="space-y-6">
@@ -50,6 +80,8 @@ export function WorkGallery({ items }: { items: GalleryItem[] }) {
         {items.map((g, idx) => (
           <button
             key={`${g.src}-${idx}`}
+            type="button"
+            aria-label={`${g.alt ?? `画像${idx + 1}`}を拡大表示`}
             onClick={() => setSelectedIndex(idx)}
             className="group relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-blue-50/30 border border-blue-100/20 shadow-sm transition-all duration-500 hover:shadow-md cursor-zoom-in"
           >
@@ -71,10 +103,17 @@ export function WorkGallery({ items }: { items: GalleryItem[] }) {
 
       {selectedImage && (
         <div
+          ref={dialogRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedImage.alt ?? "画像の拡大表示"}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm animate-in fade-in duration-300"
           onClick={() => setSelectedIndex(null)}
         >
           <button
+            ref={closeButtonRef}
+            type="button"
+            aria-label="閉じる"
             className="absolute top-4 right-4 p-2 text-white/70 hover:text-white transition-colors z-50 hover:bg-white/10 rounded-full"
             onClick={() => setSelectedIndex(null)}
           >
@@ -86,14 +125,16 @@ export function WorkGallery({ items }: { items: GalleryItem[] }) {
               <button
                 onClick={showPrev}
                 className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white transition-colors z-50 hover:bg-white/10 rounded-full"
-                aria-label="Previous image"
+                type="button"
+                aria-label="前の画像"
               >
                 <ChevronLeft className="h-8 w-8 sm:h-10 sm:w-10" />
               </button>
               <button
                 onClick={showNext}
                 className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white transition-colors z-50 hover:bg-white/10 rounded-full"
-                aria-label="Next image"
+                type="button"
+                aria-label="次の画像"
               >
                 <ChevronRight className="h-8 w-8 sm:h-10 sm:w-10" />
               </button>

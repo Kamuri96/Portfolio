@@ -3,6 +3,14 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import {
+  BASE_OPEN_GRAPH,
+  ogImage,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_URL,
+  TITLE_TEMPLATE,
+} from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,8 +23,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "This is my portfolio site",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: TITLE_TEMPLATE,
+  },
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    ...BASE_OPEN_GRAPH,
+    images: [ogImage("/img/icon.webp")],
+  },
+  twitter: {
+    card: "summary",
+  },
 };
 
 export default function RootLayout({
@@ -27,6 +46,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <a href="#main" className="skip-link">
+          本文へスキップ
+        </a>
         <Header />
 
         <main

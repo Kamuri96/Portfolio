@@ -3,6 +3,12 @@ import { SectionTitle } from "@/components/ui/section-title";
 import { skillItems } from "@/lib/data";
 import { Separator } from "@/components/ui/separator";
 import { SkillCard } from "@/components/ui/skill-card";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile",
+  description: `${profile.name}のプロフィール・経歴・スキル。`,
+};
 
 export default function ProfilePage() {
   return (
@@ -39,15 +45,16 @@ export default function ProfilePage() {
         <SectionTitle>EXPERIENCE</SectionTitle>
         <div className="relative border-l-2 border-blue-100 ml-4 pl-8 space-y-7">
           {profile.experiences.map((ex, i) => (
-            <div key={i} className="relative">
-              <div className="absolute -left-[37px] top-1 h-4 w-4" />
+            <div key={i}>
               <span className="text-[10px] font-bold text-blue-500 tracking-widest">
                 {ex.period}
               </span>
-              <p className="text-md font-bold mt-1">{ex.headline}</p>
-              <p className="text-sm text-black/60 mt-2 leading-relaxed">
-                {ex.detail}
-              </p>
+              <p className="text-base font-bold mt-1">{ex.headline}</p>
+              {ex.detail && (
+                <p className="text-sm text-black/60 mt-2 leading-relaxed">
+                  {ex.detail}
+                </p>
+              )}
             </div>
           ))}
         </div>
