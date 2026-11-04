@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio
 
-## Getting Started
+中村 美月のポートフォリオサイト。<https://portfolio.nyan-nyaka.workers.dev/>
 
-First, run the development server:
+- Next.js（App Router、`output: "export"` による静的書き出し）+ Tailwind CSS
+- Cloudflare Workers（静的アセット + 記事取得用の小さな Worker）
+
+## 開発
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # 画像を生成してから開発サーバーを起動
+npm run build   # 画像生成 → 静的書き出し（out/）
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ディレクトリ
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| パス | 内容 |
+|---|---|
+| `src/lib/data.ts` | 作品・プロフィール・経歴・スキルのデータ |
+| `src/lib/articles.ts` | note / Qiita / Zenn の RSS 取得・パース（ビルドと Worker で共用） |
+| `worker/index.ts` | Cloudflare Worker。`/api/articles` を返し、それ以外は静的アセットへ |
+| `assets/img/` | 画像の元ファイル（ここに置く） |
+| `scripts/optimize-images.mjs` | `assets/img` から `public/img` に WebP を生成 |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 画像を追加する
 
-## Learn More
+1. 元画像（png / jpg / gif / webp）を `assets/img/<フォルダ>/` に置く
+2. コードからは拡張子を `.webp` にしたパスで参照する
+   - 例: `assets/img/Foo/bar.png` → `"/img/Foo/bar.webp"`
+3. `npm run dev` / `npm run build` の前に自動で変換される（長辺 1600px、品質 80）
 
-To learn more about Next.js, take a look at the following resources:
+`public/img/` は生成物なので Git 管理外。存在しない画像を参照しているとビルドが失敗する。
+OGP 用の JPEG も `public/img/og/` に生成される（`src/lib/site.ts` の `ogImage`）。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 記事一覧の更新
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- ビルド時に取得した記事を初期表示し、ブラウザから `/api/articles` を取得して最新の一覧に差し替える
+- Worker は RSS を最大 24 時間メモリにキャッシュする（再デプロイ不要で反映）
+- フィードの追加・変更は `src/lib/articles.ts` の `FEEDS`
 
-## Deploy on Vercel
+記事が表示されないとき:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. フィード自体に記事があるか確認（例: `curl https://note.com/kamuri_96/rss`）
+2. `/api/articles` を開き `fetchedAt` と記事を確認（503 は全フィードの取得失敗）
+3. Cloudflare ダッシュボードの Observability か `npx wrangler tail` で「[articles] … の取得に失敗」を確認
+4. API が正しいのに画面が古い場合は、ブラウザの開発者ツールで `/api/articles` のリクエストを確認
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## デプロイ
+
+`main` に push すると Cloudflare Workers Builds が `npm run build` → `npx wrangler deploy` を実行する。
+手動でデプロイする場合は `npm run build && npm run deploy`（要 `npx wrangler login`）。
