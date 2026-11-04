@@ -3,6 +3,12 @@ import { SectionTitle } from "@/components/ui/section-title";
 import { skillItems } from "@/lib/data";
 import { Separator } from "@/components/ui/separator";
 import { SkillCard } from "@/components/ui/skill-card";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile",
+  description: `${profile.name}のプロフィール・経歴・スキル。`,
+};
 
 export default function ProfilePage() {
   return (

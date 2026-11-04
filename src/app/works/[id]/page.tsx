@@ -5,6 +5,8 @@ import { works } from "@/lib/data";
 import { WorkGallery } from "@/components/ui/WorkGallery";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink, ArrowLeft } from "lucide-react";
+import type { Metadata } from "next";
+import { BASE_OPEN_GRAPH, toPlainText } from "@/lib/site";
 
 type Params = { id: string };
 type Props = { params: Params | Promise<Params> };
@@ -36,6 +38,20 @@ export async function generateStaticParams() {
   return works.map((work) => ({
     id: work.id,
   }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolved = await resolveParams(params);
+  const work = works.find((w) => w.id === resolved.id);
+  if (!work) return {};
+  const title = toPlainText(work.title);
+  const description = toPlainText(work.overview);
+  return {
+    title,
+    description,
+    openGraph: { ...BASE_OPEN_GRAPH, title, description, images: [work.image] },
+    twitter: { card: "summary_large_image" },
+  };
 }
 
 export default async function WorkDetailPage({ params }: Props) {

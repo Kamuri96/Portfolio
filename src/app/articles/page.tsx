@@ -1,6 +1,12 @@
 import { SectionTitle } from "@/components/ui/section-title";
 import { getArticles } from "@/lib/articles";
 import { ArticleList } from "@/components/ArticleList";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Articles",
+  description: "note・Qiita などに投稿した記事の一覧。",
+};
 
 export default async function ArticlesPage() {
   const articles = await getArticles();
