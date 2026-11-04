@@ -175,6 +175,86 @@ export function getWork(slug: string): Work | undefined {
   return getWorks().find((w) => w.slug === slug);
 }
 
+// ---------- イラスト ----------
+
+const ILLUST_DIR = path.join(CONTENT_DIR, "illustrations");
+
+const IllustrationSchema = z.array(
+  z
+    .object({
+      file: z.string().min(1),
+      title: z.string().min(1),
+      year: z
+        .union([z.string(), z.number()])
+        .transform(String)
+        .pipe(z.string().regex(/^\d{4}$/, "「2025」のように 4 桁の年で書いてください")),
+      category: z.string().min(1),
+      tools: z.array(z.string().min(1)).default([]),
+      description: z.string().optional(),
+      /** 関連する作品のフォルダ名（content/works/<work>） */
+      work: z.string().optional(),
+    })
+    .strict()
+);
+
+export type Illustration = {
+  title: string;
+  year: string;
+  category: string;
+  tools: string[];
+  description?: string;
+  work?: { slug: string; title: string };
+  /** 拡大表示用（長辺 2400px まで） */
+  src: string;
+  /** 一覧用（長辺 800px まで） */
+  thumb: string;
+  /** 縦横比を保って並べるための元画像の大きさ */
+  width: number;
+  height: number;
+};
+
+let illustCache: Illustration[] | null = null;
+
+/** ギャラリーのイラスト（list.yaml の上から順） */
+export async function getIllustrations(): Promise<Illustration[]> {
+  if (illustCache) return illustCache;
+  const listFile = path.join(ILLUST_DIR, "list.yaml");
+  if (!fs.existsSync(listFile)) return (illustCache = []);
+  const items = parseOrThrow(IllustrationSchema, parseYaml(fs.readFileSync(listFile, "utf8")) ?? [], listFile);
+  const files = fs.readdirSync(ILLUST_DIR);
+  // sharp はビルド時だけ使う（devDependencies）
+  const { default: sharp } = await import("sharp");
+
+  illustCache = await Promise.all(
+    items.map(async (item) => {
+      if (!files.includes(item.file)) {
+        throw new ContentError(listFile, `画像「${item.file}」が content/illustrations にありません（大文字・小文字も区別します）`);
+      }
+      const work = item.work ? getWork(item.work) : undefined;
+      if (item.work && !work) {
+        throw new ContentError(listFile, `「${item.title}」の work: ${item.work} に当たる作品がありません（content/works のフォルダ名を書いてください）`);
+      }
+      const meta = await sharp(path.join(ILLUST_DIR, item.file)).metadata();
+      // EXIF で 90° 回転している写真は縦横を入れ替える
+      const rotated = (meta.orientation ?? 1) >= 5;
+      const name = item.file.replace(/\.(png|jpe?g|gif|webp)$/i, "");
+      return {
+        title: item.title,
+        year: item.year,
+        category: item.category,
+        tools: item.tools,
+        description: item.description,
+        work: work && { slug: work.slug, title: work.title },
+        src: `/img/illustrations/${name}.webp`,
+        thumb: `/img/illustrations/thumb/${name}.webp`,
+        width: (rotated ? meta.height : meta.width) ?? 1,
+        height: (rotated ? meta.width : meta.height) ?? 1,
+      };
+    })
+  );
+  return illustCache;
+}
+
 let profileCache: Profile | null = null;
 
 export function getProfile(): Profile {

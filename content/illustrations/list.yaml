@@ -1,0 +1,33 @@
+# イラストギャラリーに載せる絵の一覧。上から順に表示する（新しいものを上に）
+#
+# 追加：このフォルダに画像（png / jpg / gif / webp）を入れ、下に 1 件書き足す
+# 並べ替え：項目ごと上下を入れ替える
+# 削除：項目を消し、画像も消す
+#
+#   file:        このフォルダ内の画像ファイル名（必須）
+#   title:       題名（必須）
+#   year:        制作年（必須）
+#   category:    種類。ギャラリーの絞り込みに使う（必須）
+#   tools:       使ったツール（任意）
+#   description: ひとこと説明（任意）
+#   work:        関連する作品のフォルダ名（任意。content/works/<ここ>）
+
+# ↓ 仕組みの確認用に、全世界VTuber計画!? のイラストを仮に入れています。差し替えてください
+- file: vtuber-main.png
+  title: 全世界VTuber計画!? メインビジュアル
+  year: 2025
+  category: ゲーム
+  tools: [Clip Studio Paint, Photoshop]
+  work: all-vtuber-plan
+- file: vtuber-sd.png
+  title: SD イラスト
+  year: 2025
+  category: キャラクター
+  tools: [Clip Studio Paint]
+  work: all-vtuber-plan
+- file: vtuber-badge.png
+  title: 缶バッジイラスト
+  year: 2025
+  category: グッズ
+  tools: [Clip Studio Paint]
+  work: all-vtuber-plan

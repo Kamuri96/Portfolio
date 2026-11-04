@@ -19,6 +19,7 @@ npm run lint
 | パス | 内容 |
 |---|---|
 | `content/works/<slug>/` | 作品 1 つ分（`index.md` と画像）。フォルダ名が URL（`/works/<slug>`）になる |
+| `content/illustrations/` | イラストギャラリーの画像と `list.yaml`（載せる絵の一覧） |
 | `content/profile.yaml` | 名前・自己紹介・経歴・スキル |
 | `src/lib/content.ts` | `content/` の読み込みと書式チェック |
 | `src/lib/articles.ts` | note / Qiita / Zenn の RSS 取得・パース（ビルドと Worker で共用） |
@@ -58,6 +59,24 @@ links:
 `npm run build` / `npm run dev` がファイル名と項目名を表示して止まる。
 
 経歴やスキルは `content/profile.yaml` の一覧の末尾に追記する。
+
+## イラストを追加する
+
+1. 画像を `content/illustrations/` に入れる（できるだけ大きいサイズのまま）
+2. `content/illustrations/list.yaml` に 1 件書き足す（上から順に表示されるので、新しいものを上に）
+
+```yaml
+- file: new.png              # このフォルダ内のファイル名
+  title: 題名
+  year: 2026
+  category: キャラクター      # ギャラリーの絞り込みに使う
+  tools: [Clip Studio Paint] # 任意
+  description: ひとこと説明   # 任意
+  work: all-vtuber-plan      # 関連する作品のフォルダ名（任意）
+```
+
+並べ替えは項目ごと上下を入れ替え、削除は項目と画像を消す。
+一覧用（長辺 800px）と拡大表示用（長辺 2400px）の画像は自動で作られる。
 
 ## 画像について
 

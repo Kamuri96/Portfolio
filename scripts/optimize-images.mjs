@@ -3,6 +3,8 @@
 //
 // - assets/img/foo/bar.png        → public/img/foo/bar.webp（サイト共通の画像。コードから "/img/foo/bar.webp" で参照）
 // - content/works/<slug>/bar.png  → public/img/works/<slug>/bar.webp（作品の画像。src/lib/content.ts が参照を組み立てる）
+// - content/illustrations/bar.png → public/img/illustrations/bar.webp（拡大表示用・長辺 2400px）
+//                                   public/img/illustrations/thumb/bar.webp（一覧用・長辺 800px）
 // - OGP 用に public/img/og/foo/bar.jpg も生成する（WebP 非対応の SNS があるため。src/lib/site.ts の ogImage）
 // - 元画像より新しい出力があれば変換をスキップする
 // - 最後に src/ 内の "/img/..." 参照がすべて存在するか確認し、なければ失敗する
@@ -12,14 +14,14 @@ import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 
-// 元画像の置き場所と、public/img 内の出力先
+// 元画像の置き場所と、public/img 内の出力先・長辺の上限（thumb があれば一覧用の小さい画像も作る）
 const ROOTS = [
-  { src: "assets/img", out: "" },
-  { src: "content", out: "" },
+  { src: "assets/img", out: "", max: 1600 },
+  { src: "content/works", out: "works", max: 1600 },
+  { src: "content/illustrations", out: "illustrations", max: 2400, thumb: { out: "illustrations/thumb", max: 800 } },
 ];
 const OUT_DIR = "public/img";
 const OG_DIR = path.join(OUT_DIR, "og");
-const MAX_SIZE = 1600;
 const OG_MAX_SIZE = 1200;
 const QUALITY = 80;
 const SOURCE_EXT = /\.(png|jpe?g|gif|webp)$/i;
@@ -32,8 +34,8 @@ function walk(dir) {
   });
 }
 
-const outPath = (dir, { root, file }, ext) =>
-  path.join(dir, root.out, path.relative(root.src, file)).replace(SOURCE_EXT, ext);
+const outPath = (dir, { root, file }, ext, sub = root.out) =>
+  path.join(dir, sub, path.relative(root.src, file)).replace(SOURCE_EXT, ext);
 
 const isFresh = (out, src) =>
   fs.existsSync(out) && fs.statSync(out).mtimeMs >= fs.statSync(src).mtimeMs;
@@ -55,12 +57,18 @@ for (const src of sources) {
   }
   expected.add(webp);
   expected.add(og);
-  if (isFresh(webp, src.file) && isFresh(og, src.file)) continue;
+  const thumb = src.root.thumb && outPath(OUT_DIR, src, ".webp", src.root.thumb.out);
+  if (thumb) expected.add(thumb);
+  if (isFresh(webp, src.file) && isFresh(og, src.file) && (!thumb || isFresh(thumb, src.file))) continue;
 
   fs.mkdirSync(path.dirname(webp), { recursive: true });
   fs.mkdirSync(path.dirname(og), { recursive: true });
   const resize = (size) => ({ width: size, height: size, fit: "inside", withoutEnlargement: true });
-  await sharp(src.file, { animated: true }).resize(resize(MAX_SIZE)).webp({ quality: QUALITY }).toFile(webp);
+  await sharp(src.file, { animated: true }).resize(resize(src.root.max)).webp({ quality: QUALITY }).toFile(webp);
+  if (thumb) {
+    fs.mkdirSync(path.dirname(thumb), { recursive: true });
+    await sharp(src.file, { animated: true }).resize(resize(src.root.thumb.max)).webp({ quality: QUALITY }).toFile(thumb);
+  }
   await sharp(src.file).resize(resize(OG_MAX_SIZE)).flatten({ background: "#ffffff" }).jpeg({ quality: QUALITY }).toFile(og);
   converted++;
 }
@@ -111,7 +119,8 @@ for (const file of walk("src").filter((f) => /\.(tsx?|mdx?)$/.test(f))) {
   const text = fs.readFileSync(file, "utf8");
   // 拡張子付きのパスだけを対象にする（"/img/og/" のような接頭辞の文字列は除外）
   for (const [, ref] of text.matchAll(/["'`](\/img\/[^"'`]+\.\w+)["'`]/g)) {
-    if (!generated.has(ref)) missing.push(`${file}: ${ref}`);
+    // テンプレート文字列で組み立てるパス（${...} を含むもの）は読み込み側で確認するので除外
+    if (!ref.includes("${") && !generated.has(ref)) missing.push(`${file}: ${ref}`);
   }
 }
 if (missing.length > 0) {

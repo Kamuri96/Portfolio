@@ -15,9 +15,10 @@ export const Header = () => {
           kamuri
         </Link>
         <div className="flex items-center">
-          <nav className="flex gap-5 sm:gap-8 font-hud text-sm tracking-[0.04em] text-ink-2">
+          <nav className="flex gap-4 font-hud text-[13px] tracking-[0.04em] text-ink-2 sm:gap-8 sm:text-sm">
             {[
               { href: "/works", label: "Works" },
+              { href: "/illust", label: "Illust" },
               { href: "/profile", label: "Profile" },
               { href: "/articles", label: "Articles" },
             ].map((item) => (
