@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import {
   BASE_OPEN_GRAPH,
+  ogImage,
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_URL,
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   openGraph: {
     ...BASE_OPEN_GRAPH,
-    images: ["/img/icon.png"],
+    images: [ogImage("/img/icon.webp")],
   },
   twitter: {
     card: "summary",

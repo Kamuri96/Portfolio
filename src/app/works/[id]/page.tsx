@@ -6,7 +6,7 @@ import { WorkGallery } from "@/components/ui/WorkGallery";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink, ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
-import { BASE_OPEN_GRAPH, toPlainText } from "@/lib/site";
+import { BASE_OPEN_GRAPH, ogImage, toPlainText } from "@/lib/site";
 
 type Params = { id: string };
 type Props = { params: Params | Promise<Params> };
@@ -49,7 +49,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    openGraph: { ...BASE_OPEN_GRAPH, title, description, images: [work.image] },
+    openGraph: {
+      ...BASE_OPEN_GRAPH,
+      title,
+      description,
+      images: [ogImage(work.image)],
+    },
     twitter: { card: "summary_large_image" },
   };
 }

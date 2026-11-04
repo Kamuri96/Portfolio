@@ -62,7 +62,7 @@ export default async function TopPage() {
           <div className="relative">
             <div className="absolute inset-0 rounded-full" />
             <Avatar className="h-24 w-24 border-2 border-white shadow-lg">
-              <AvatarImage src="/img/icon.png" alt="プロフィール画像" />
+              <AvatarImage src="/img/icon.webp" alt="プロフィール画像" />
             </Avatar>
           </div>
           <div className="space-y-2">
