@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export type Channel = {
-  id: string;
+  slug: string;
   title: string;
   category: string;
   year: string;
@@ -40,7 +40,7 @@ function NameBlock({ name }: { name: string }) {
 
 function NowOnAir({ ch }: { ch: Channel }) {
   return (
-    <Link href={`/works/${ch.id}`} className="group block text-white">
+    <Link href={`/works/${ch.slug}`} className="group block text-white">
       <span className="block font-hud text-[10px] tracking-[0.12em] text-white/70 sm:text-xs">
         NOW ON AIR
       </span>
@@ -63,7 +63,7 @@ function ChannelButtons({
     <div className="flex gap-1.5" role="group" aria-label="映す作品を切り替える">
       {channels.map((c, i) => (
         <button
-          key={c.id}
+          key={c.slug}
           type="button"
           onClick={() => onSelect(i)}
           aria-pressed={i === idx}
@@ -111,7 +111,7 @@ export function ChannelHero({ name, channels }: { name: string; channels: Channe
       <div className="relative aspect-video overflow-hidden bg-black sm:rounded-md">
         {channels.map((c, i) => (
           <Image
-            key={c.id}
+            key={c.slug}
             src={c.image}
             alt={i === idx ? c.title : ""}
             aria-hidden={i !== idx}

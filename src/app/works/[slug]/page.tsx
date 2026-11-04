@@ -1,13 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { works } from "@/lib/data";
+import { getWork, getWorks } from "@/lib/content";
 import { WorkGallery } from "@/components/ui/WorkGallery";
 import type { Metadata } from "next";
-import { BASE_OPEN_GRAPH, ogImage, toPlainText } from "@/lib/site";
-import { CATEGORY_LABEL, yearOf } from "@/lib/work-meta";
+import { BASE_OPEN_GRAPH, ogImage } from "@/lib/site";
 
-type Params = { id: string };
+type Params = { slug: string };
 type Props = { params: Params | Promise<Params> };
 
 async function resolveParams(params: Props["params"]) {
@@ -24,17 +23,15 @@ function InfoRow({ label, children }: { label: string; children: React.ReactNode
 }
 
 export async function generateStaticParams() {
-  return works.map((work) => ({
-    id: work.id,
-  }));
+  return getWorks().map((work) => ({ slug: work.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolved = await resolveParams(params);
-  const work = works.find((w) => w.id === resolved.id);
+  const work = getWork(resolved.slug);
   if (!work) return {};
-  const title = toPlainText(work.title);
-  const description = toPlainText(work.overview);
+  const title = work.title;
+  const description = work.body.flat().join("");
   return {
     title,
     description,
@@ -42,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ...BASE_OPEN_GRAPH,
       title,
       description,
-      images: [ogImage(work.image)],
+      images: [ogImage(work.cover)],
     },
     twitter: { card: "summary_large_image" },
   };
@@ -50,16 +47,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function WorkDetailPage({ params }: Props) {
   const resolved = await resolveParams(params);
-  const work = works.find((w) => w.id === resolved.id);
+  const work = getWork(resolved.slug);
   if (!work) return notFound();
-  const title = toPlainText(work.title);
+  const title = work.title;
 
   return (
     <article className="space-y-14 pb-24 pt-10">
       <header className="space-y-3">
         <p className="flex gap-3 font-hud text-sm tracking-[0.1em]">
-          <span className="text-accent">{CATEGORY_LABEL[work.tag]}</span>
-          <span className="text-ink-3">{yearOf(work.period)}</span>
+          <span className="text-accent">{work.category}</span>
+          <span className="text-ink-3">{work.year}</span>
         </p>
         <h1 className="text-3xl font-bold leading-tight text-ink sm:text-5xl">{title}</h1>
       </header>
@@ -67,7 +64,7 @@ export default async function WorkDetailPage({ params }: Props) {
       {/* メインの画像は画面の中に映す */}
       <div className="relative -mx-4 aspect-video overflow-hidden bg-black sm:mx-0 sm:rounded-md">
         <Image
-          src={work.image}
+          src={work.cover}
           alt={title}
           fill
           className="object-contain p-6 sm:p-12"
@@ -80,14 +77,23 @@ export default async function WorkDetailPage({ params }: Props) {
 
       <div className="grid gap-14 lg:grid-cols-[1fr_300px]">
         <div className="space-y-14">
-          {work.overview && (
+          {work.body.length > 0 && (
             <section className="space-y-4">
               <h2 className="font-hud text-lg font-bold tracking-[0.1em] text-ink">OVERVIEW</h2>
-              <p className="whitespace-pre-line text-[15px] leading-8 text-ink-2">{work.overview}</p>
+              {work.body.map((lines, i) => (
+                <p key={i} className="text-[15px] leading-8 text-ink-2">
+                  {lines.map((line, j) => (
+                    <span key={j}>
+                      {j > 0 && <br />}
+                      {line}
+                    </span>
+                  ))}
+                </p>
+              ))}
             </section>
           )}
 
-          {work.gallery && work.gallery.length > 0 && (
+          {work.gallery.length > 0 && (
             <section className="space-y-6">
               <h2 className="font-hud text-lg font-bold tracking-[0.1em] text-ink">GALLERY</h2>
               <WorkGallery items={work.gallery} />
@@ -100,7 +106,7 @@ export default async function WorkDetailPage({ params }: Props) {
             <InfoRow label="PERIOD">
               <span className="font-hud">{work.period}</span>
             </InfoRow>
-            <InfoRow label="ROLE">{work.role}</InfoRow>
+            <InfoRow label="ROLE">{work.role.join(" / ")}</InfoRow>
             {work.tech.length > 0 && (
               <InfoRow label="TECH">
                 <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
@@ -112,7 +118,7 @@ export default async function WorkDetailPage({ params }: Props) {
                 </ul>
               </InfoRow>
             )}
-            {work.links && work.links.length > 0 && (
+            {work.links.length > 0 && (
               <InfoRow label="LINKS">
                 <ul className="m-0 grid list-none gap-2 p-0">
                   {work.links.map((l) => (

@@ -1,4 +1,4 @@
-import { profile } from "@/lib/data";
+import { getProfile } from "@/lib/content";
 
 const socialLinks = [
   { label: "X", href: "https://x.com/Kamuri_96" },
@@ -10,6 +10,7 @@ const socialLinks = [
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const profile = getProfile();
 
   return (
     <footer className="border-t border-line">

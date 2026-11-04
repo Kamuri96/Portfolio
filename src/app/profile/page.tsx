@@ -1,7 +1,9 @@
 import Image from "next/image";
-import { profile, skillItems } from "@/lib/data";
+import { getProfile } from "@/lib/content";
 import { SectionHeading } from "@/components/SectionHeading";
 import type { Metadata } from "next";
+
+const profile = getProfile();
 
 export const metadata: Metadata = {
   title: "Profile",
@@ -56,10 +58,10 @@ export default function ProfilePage() {
       <section className="space-y-4">
         <SectionHeading>SKILLS</SectionHeading>
         <dl className="m-0">
-          {skillItems.map((s) => (
+          {profile.skills.map((s) => (
             <div key={s.name} className="grid grid-cols-[1fr_auto] gap-x-4 gap-y-1 border-b border-line py-4 sm:grid-cols-[12rem_5rem_1fr]">
               <dt className="font-hud text-[15px] font-bold text-ink">{s.name}</dt>
-              <dd className="m-0 font-hud text-sm text-ink-3 sm:order-none">{s.experience}</dd>
+              <dd className="m-0 font-hud text-sm text-ink-3 sm:order-none">{s.since}~</dd>
               <dd className="col-span-2 m-0 text-sm text-ink-2 sm:col-span-1">{s.description}</dd>
             </div>
           ))}

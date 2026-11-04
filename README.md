@@ -1,6 +1,6 @@
 # Portfolio
 
-中村 美月のポートフォリオサイト。<https://portfolio.nyan-nyaka.workers.dev/>
+kamuri（中村 美月）のポートフォリオサイト。<https://portfolio.nyan-nyaka.workers.dev/>
 
 - Next.js（App Router、`output: "export"` による静的書き出し）+ Tailwind CSS
 - Cloudflare Workers（静的アセット + 記事取得用の小さな Worker）
@@ -18,21 +18,53 @@ npm run lint
 
 | パス | 内容 |
 |---|---|
-| `src/lib/data.ts` | 作品・プロフィール・経歴・スキルのデータ |
+| `content/works/<slug>/` | 作品 1 つ分（`index.md` と画像）。フォルダ名が URL（`/works/<slug>`）になる |
+| `content/profile.yaml` | 名前・自己紹介・経歴・スキル |
+| `src/lib/content.ts` | `content/` の読み込みと書式チェック |
 | `src/lib/articles.ts` | note / Qiita / Zenn の RSS 取得・パース（ビルドと Worker で共用） |
 | `worker/index.ts` | Cloudflare Worker。`/api/articles` を返し、それ以外は静的アセットへ |
-| `assets/img/` | 画像の元ファイル（ここに置く） |
-| `scripts/optimize-images.mjs` | `assets/img` から `public/img` に WebP を生成 |
+| `assets/img/` | 作品以外の画像（アイコンなど）の元ファイル |
+| `scripts/optimize-images.mjs` | `assets/img` と `content/` の画像から `public/img` に WebP を生成 |
+| `public/_redirects` | 旧 URL（`/works/w1` など）から作品名の URL への転送 |
 
-## 画像を追加する
+## 作品を追加する
 
-1. 元画像（png / jpg / gif / webp）を `assets/img/<フォルダ>/` に置く
-2. コードからは拡張子を `.webp` にしたパスで参照する
-   - 例: `assets/img/Foo/bar.png` → `"/img/Foo/bar.webp"`
-3. `npm run dev` / `npm run build` の前に自動で変換される（長辺 1600px、品質 80）
+1. `content/works/<slug>/` を作る（slug は半角英小文字・数字・ハイフン。URL になる）
+2. 画像（png / jpg / gif / webp）を同じフォルダに入れる
+3. `index.md` を書く（既存の作品をコピーして書き換えるのが早い）
 
-`public/img/` は生成物なので Git 管理外。存在しない画像を参照しているとビルドが失敗する。
-OGP 用の JPEG も `public/img/og/` に生成される（`src/lib/site.ts` の `ogImage`）。
+```md
+---
+title: 作品名
+category: GAME          # GAME / WEB / DEVICE / WORKSHOP
+date: 2025-04           # 並び順に使う開始年月（「2025」だけでも可）
+period: 2025.4 ~ 5      # 表示用の期間
+client: 個人制作
+role: [企画, 実装]
+tech: [Unity, C#]
+cover: cover.png        # 一覧やトップに使う画像（同じフォルダのファイル名）
+gallery:
+  - src: play.png
+    alt: プレイ画面
+links:
+  - label: unityroom
+    href: https://unityroom.com/...
+---
+
+本文（概要）。空行で段落を分け、段落内の改行はそのまま表示される。
+```
+
+作品は `date` の新しい順に並ぶ。書き間違い（種類名・年月の書式・存在しない画像など）があると、
+`npm run build` / `npm run dev` がファイル名と項目名を表示して止まる。
+
+経歴やスキルは `content/profile.yaml` の一覧の末尾に追記する。
+
+## 画像について
+
+- 元画像は `npm run dev` / `npm run build` の前に自動で WebP に変換される（長辺 1600px、品質 80）
+- 作品以外の画像は `assets/img/` に置き、コードから拡張子を `.webp` にしたパスで参照する（例: `"/img/icon.webp"`）
+- `public/img/` は生成物なので Git 管理外。OGP 用の JPEG も `public/img/og/` に生成される
+- macOS は大文字・小文字を区別しないが、ビルド環境（Linux）は区別する。ファイル名の大文字・小文字の食い違いはビルド時に検出される
 
 ## 記事一覧の更新
 
